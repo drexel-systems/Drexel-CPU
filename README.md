@@ -7,6 +7,8 @@ A bare-metal RISC-V RV32IM emulated development platform for **CS281 Systems Arc
 📄 **[CS281 Technical Reference Manual](hardware/docs/CS281_TRM.pdf)** — memory map, peripheral registers, interrupt reference, boot sequence, and register quick reference.
 *(Also available as [CS281_TRM.docx](hardware/docs/CS281_TRM.docx) for editing.)*
 
+![CS281 Virtual Development Board](hardware/docs/cs281_board.svg)
+
 ---
 
 ## What's Here
@@ -67,8 +69,6 @@ The CS281 board is a custom virtual platform defined in [`hardware/cs281_board.r
 | CLINT | `0xe0005000` | — |
 | GPIO Output (LEDs) | `0xe0015000` | — |
 | GPIO Input (BTN/DIP) | `0xe0015400` | — |
-
-![CS281 Board Rendering](hardware/docs/cs281_board.svg)
 
 → See [`hardware/cs281_board.repl`](hardware/cs281_board.repl) for the full Renode platform definition and [`hardware/docs/CS281_TRM.pdf`](hardware/docs/CS281_TRM.pdf) for complete register documentation.
 

@@ -79,19 +79,6 @@
 <text x="82" y="86" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">POWER</text>
 <rect x="35" y="90" width="94" height="370" rx="4" fill="none" stroke="#dce4c0" stroke-width="0.8" stroke-dasharray="4,3"/>
 
-<!-- J1 — 3-pin power connector (PWR, GND, GND) -->
-<g transform="translate(50,105)">
-  <rect x="0" y="0" width="22" height="58" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
-  <!-- 3 pin holes -->
-  <rect x="5" y="6"  width="12" height="10" rx="1" fill="#d09020"/>
-  <rect x="5" y="24" width="12" height="10" rx="1" fill="#d09020"/>
-  <rect x="5" y="42" width="12" height="10" rx="1" fill="#d09020"/>
-  <text x="11" y="9"  text-anchor="middle" font-family="monospace" font-size="4" fill="#1a1a1a">+</text>
-  <text x="11" y="27" text-anchor="middle" font-family="monospace" font-size="4" fill="#1a1a1a">G</text>
-  <text x="11" y="45" text-anchor="middle" font-family="monospace" font-size="4" fill="#1a1a1a">G</text>
-</g>
-<text x="61" y="173" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">J1</text>
-<text x="61" y="181" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">PWR</text>
 
 <!-- U_REG — 3.3V regulator (SOT-223) -->
 <g transform="translate(44,196)">
@@ -413,98 +400,51 @@
 <!-- ═══════════════════════════════════════════════════════════════════════
      CONNECTORS — UART J2 (top-right area)
      ═══════════════════════════════════════════════════════════════════════ -->
-<g transform="translate(754, 78)">
-  <rect x="0" y="0" width="20" height="100" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
-  <g fill="#d09020">
-    <rect x="4" y="4"  width="12" height="10" rx="1"/>
-    <rect x="4" y="18" width="12" height="10" rx="1"/>
-    <rect x="4" y="32" width="12" height="10" rx="1"/>
-    <rect x="4" y="46" width="12" height="10" rx="1"/>
-    <rect x="4" y="60" width="12" height="10" rx="1"/>
-    <rect x="4" y="74" width="12" height="10" rx="1"/>
-  </g>
-  <!-- Pin labels -->
-  <text x="24" y="12"  font-family="monospace" font-size="6" fill="#dce4c0">GND</text>
-  <text x="24" y="26"  font-family="monospace" font-size="6" fill="#dce4c0">VCC</text>
-  <text x="24" y="40"  font-family="monospace" font-size="6" fill="#dce4c0">TX</text>
-  <text x="24" y="54"  font-family="monospace" font-size="6" fill="#dce4c0">RX</text>
-  <text x="24" y="68"  font-family="monospace" font-size="6" fill="#dce4c0">RTS</text>
-  <text x="24" y="82"  font-family="monospace" font-size="6" fill="#dce4c0">CTS</text>
-</g>
-<text x="764" y="75" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">J2 UART</text>
-
 <!-- GDB/Debug Header J3 -->
-<g transform="translate(840, 78)">
-  <rect x="0" y="0" width="20" height="68" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
-  <g fill="#d09020">
-    <rect x="4" y="4"  width="12" height="10" rx="1"/>
-    <rect x="4" y="18" width="12" height="10" rx="1"/>
-    <rect x="4" y="32" width="12" height="10" rx="1"/>
-    <rect x="4" y="46" width="12" height="10" rx="1"/>
-  </g>
-  <text x="24" y="12"  font-family="monospace" font-size="6" fill="#dce4c0">VCC</text>
-  <text x="24" y="26"  font-family="monospace" font-size="6" fill="#dce4c0">GND</text>
-  <text x="24" y="40"  font-family="monospace" font-size="6" fill="#dce4c0">SWDIO</text>
-  <text x="24" y="54"  font-family="monospace" font-size="6" fill="#dce4c0">SWCLK</text>
-</g>
-<text x="850" y="75" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">J3 DBG</text>
-
 <!-- GPIO Header J4 (right edge, 8-pin) -->
-<g transform="translate(900, 270)">
-  <rect x="0" y="0" width="20" height="134" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
-  <g fill="#d09020">
-    <rect x="4" y="4"  width="12" height="10" rx="1"/>
-    <rect x="4" y="18" width="12" height="10" rx="1"/>
-    <rect x="4" y="32" width="12" height="10" rx="1"/>
-    <rect x="4" y="46" width="12" height="10" rx="1"/>
-    <rect x="4" y="60" width="12" height="10" rx="1"/>
-    <rect x="4" y="74" width="12" height="10" rx="1"/>
-    <rect x="4" y="88" width="12" height="10" rx="1"/>
-    <rect x="4" y="102" width="12" height="10" rx="1"/>
-  </g>
-  <!-- labels on left side of header -->
-  <text x="-2" y="12"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">GP0</text>
-  <text x="-2" y="26"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">GP1</text>
-  <text x="-2" y="40"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">GP2</text>
-  <text x="-2" y="54"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">GP3</text>
-  <text x="-2" y="68"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">SDA</text>
-  <text x="-2" y="82"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">SCL</text>
-  <text x="-2" y="96"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">GND</text>
-  <text x="-2" y="110" text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">VCC</text>
-</g>
-<text x="893" y="267" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">J4</text>
-<text x="893" y="276" text-anchor="middle" font-family="monospace" font-size="5.5" fill="#b0c090">GPIO</text>
+
 
 <!-- I2C Header J5 (left side) -->
-<g transform="translate(30, 440)">
-  <rect x="0" y="0" width="20" height="68" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
-  <g fill="#d09020">
-    <rect x="4" y="4"  width="12" height="10" rx="1"/>
-    <rect x="4" y="18" width="12" height="10" rx="1"/>
-    <rect x="4" y="32" width="12" height="10" rx="1"/>
-    <rect x="4" y="46" width="12" height="10" rx="1"/>
-  </g>
-  <text x="24" y="12"  font-family="monospace" font-size="6" fill="#dce4c0">VCC</text>
-  <text x="24" y="26"  font-family="monospace" font-size="6" fill="#dce4c0">GND</text>
-  <text x="24" y="40"  font-family="monospace" font-size="6" fill="#dce4c0">SDA</text>
-  <text x="24" y="54"  font-family="monospace" font-size="6" fill="#dce4c0">SCL</text>
-</g>
-<text x="40" y="437" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#dce4c0">J5 I2C</text>
-
 <!-- ═══════════════════════════════════════════════════════════════════════
      7-SEGMENT DISPLAY (virtual, silkscreened footprint)
      ═══════════════════════════════════════════════════════════════════════ -->
-<g transform="translate(700, 156)">
-  <rect x="0" y="0" width="82" height="50" rx="3" fill="#111" stroke="#dce4c0" stroke-width="0.8" stroke-dasharray="2,2"/>
-  <!-- 7 segments -->
-  <!-- top -->   <rect x="20" y="4"  width="42" height="6" rx="2" fill="#1a0000"/>
-  <!-- top-L -->  <rect x="14" y="10" width="6"  height="16" rx="2" fill="#cc2200" opacity="0.85"/>
-  <!-- top-R -->  <rect x="62" y="10" width="6"  height="16" rx="2" fill="#cc2200" opacity="0.85"/>
-  <!-- mid -->   <rect x="20" y="22" width="42" height="6" rx="2" fill="#1a0000"/>
-  <!-- bot-L -->  <rect x="14" y="28" width="6"  height="16" rx="2" fill="#1a0000"/>
-  <!-- bot-R -->  <rect x="62" y="28" width="6"  height="16" rx="2" fill="#cc2200" opacity="0.85"/>
-  <!-- bot -->   <rect x="20" y="42" width="42" height="6" rx="2" fill="#1a0000"/>
-  <text x="41" y="66" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">7-SEG</text>
+<g transform="translate(697, 150)">
+  <!-- Display bezel -->
+  <rect x="0" y="0" width="88" height="58" rx="3" fill="#0d0d0d" stroke="#dce4c0" stroke-width="0.8" stroke-dasharray="2,2"/>
+  <!-- Red tinted background glow for each digit -->
+  <rect x="4"  y="3" width="36" height="50" rx="2" fill="#1a0000"/>
+  <rect x="48" y="3" width="36" height="50" rx="2" fill="#1a0000"/>
+
+  <!-- ── Digit "4"  (segs: f g b c  lit;  a d e  off) ── -->
+  <!-- a top    OFF --> <rect x="8"  y="5"  width="24" height="4" rx="1" fill="#300000"/>
+  <!-- f top-L  ON  --> <rect x="5"  y="8"  width="4"  height="18" rx="1" fill="#ff3300"/>
+  <!-- b top-R  ON  --> <rect x="34" y="8"  width="4"  height="18" rx="1" fill="#ff3300"/>
+  <!-- g mid    ON  --> <rect x="8"  y="28" width="24" height="4" rx="1" fill="#ff3300"/>
+  <!-- e bot-L  OFF --> <rect x="5"  y="32" width="4"  height="18" rx="1" fill="#300000"/>
+  <!-- c bot-R  ON  --> <rect x="34" y="32" width="4"  height="18" rx="1" fill="#ff3300"/>
+  <!-- d bot    OFF --> <rect x="8"  y="48" width="24" height="4" rx="1" fill="#300000"/>
+
+  <!-- ── Digit "2"  (segs: a b g e d  lit;  f c  off) ── -->
+  <!-- a top    ON  --> <rect x="52" y="5"  width="24" height="4" rx="1" fill="#ff3300"/>
+  <!-- f top-L  OFF --> <rect x="49" y="8"  width="4"  height="18" rx="1" fill="#300000"/>
+  <!-- b top-R  ON  --> <rect x="78" y="8"  width="4"  height="18" rx="1" fill="#ff3300"/>
+  <!-- g mid    ON  --> <rect x="52" y="28" width="24" height="4" rx="1" fill="#ff3300"/>
+  <!-- e bot-L  ON  --> <rect x="49" y="32" width="4"  height="18" rx="1" fill="#ff3300"/>
+  <!-- c bot-R  OFF --> <rect x="78" y="32" width="4"  height="18" rx="1" fill="#300000"/>
+  <!-- d bot    ON  --> <rect x="52" y="48" width="24" height="4" rx="1" fill="#ff3300"/>
+
+  <!-- Segment glow overlay (lit segments only, soft bloom) -->
+  <rect x="5"  y="8"  width="4"  height="18" rx="1" fill="#ff6633" opacity="0.4"/>
+  <rect x="34" y="8"  width="4"  height="18" rx="1" fill="#ff6633" opacity="0.4"/>
+  <rect x="8"  y="28" width="24" height="4"  rx="1" fill="#ff6633" opacity="0.4"/>
+  <rect x="34" y="32" width="4"  height="18" rx="1" fill="#ff6633" opacity="0.4"/>
+  <rect x="52" y="5"  width="24" height="4"  rx="1" fill="#ff6633" opacity="0.4"/>
+  <rect x="78" y="8"  width="4"  height="18" rx="1" fill="#ff6633" opacity="0.4"/>
+  <rect x="52" y="28" width="24" height="4"  rx="1" fill="#ff6633" opacity="0.4"/>
+  <rect x="49" y="32" width="4"  height="18" rx="1" fill="#ff6633" opacity="0.4"/>
+  <rect x="52" y="48" width="24" height="4"  rx="1" fill="#ff6633" opacity="0.4"/>
+
+  <text x="44" y="70" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">7-SEG  "42"</text>
 </g>
 
 <!-- ═══════════════════════════════════════════════════════════════════════
@@ -523,11 +463,11 @@
      LEDs D1–D4 (bottom right)
      ═══════════════════════════════════════════════════════════════════════ -->
 <!-- Silkscreen LED zone -->
-<rect x="618" y="538" width="168" height="60" rx="3" fill="none" stroke="#dce4c0" stroke-width="0.7" stroke-dasharray="3,2"/>
-<text x="702" y="535" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">GPIO OUTPUT LEDS</text>
+<rect x="618" y="476" width="168" height="60" rx="3" fill="none" stroke="#dce4c0" stroke-width="0.7" stroke-dasharray="3,2"/>
+<text x="702" y="473" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">GPIO OUTPUT LEDS</text>
 
 <!-- D1 RED -->
-<g transform="translate(632,542)">
+<g transform="translate(632,480)">
   <rect x="-4" y="24" width="4" height="8" fill="#d09020"/>
   <rect x="6"  y="24" width="4" height="8" fill="#d09020"/>
   <ellipse cx="3" cy="18" rx="10" ry="10" fill="#dd1010" opacity="0.92" filter="url(#ledshadow)"/>
@@ -539,7 +479,7 @@
 </g>
 
 <!-- D2 YELLOW -->
-<g transform="translate(674,542)">
+<g transform="translate(674,480)">
   <rect x="-4" y="24" width="4" height="8" fill="#d09020"/>
   <rect x="6"  y="24" width="4" height="8" fill="#d09020"/>
   <ellipse cx="3" cy="18" rx="10" ry="10" fill="#ddb010" opacity="0.92" filter="url(#ledshadow)"/>
@@ -550,7 +490,7 @@
 </g>
 
 <!-- D3 GREEN -->
-<g transform="translate(716,542)">
+<g transform="translate(716,480)">
   <rect x="-4" y="24" width="4" height="8" fill="#d09020"/>
   <rect x="6"  y="24" width="4" height="8" fill="#d09020"/>
   <ellipse cx="3" cy="18" rx="10" ry="10" fill="#10cc30" opacity="0.92" filter="url(#ledshadow)"/>
@@ -561,7 +501,7 @@
 </g>
 
 <!-- D4 BLUE -->
-<g transform="translate(758,542)">
+<g transform="translate(758,480)">
   <rect x="-4" y="24" width="4" height="8" fill="#d09020"/>
   <rect x="6"  y="24" width="4" height="8" fill="#d09020"/>
   <ellipse cx="3" cy="18" rx="10" ry="10" fill="#2030dd" opacity="0.92" filter="url(#ledshadow)"/>
@@ -574,11 +514,11 @@
 <!-- ═══════════════════════════════════════════════════════════════════════
      PUSH BUTTONS BTN0, BTN1
      ═══════════════════════════════════════════════════════════════════════ -->
-<rect x="248" y="538" width="168" height="60" rx="3" fill="none" stroke="#dce4c0" stroke-width="0.7" stroke-dasharray="3,2"/>
-<text x="332" y="535" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">GPIO INPUT</text>
+<rect x="248" y="476" width="168" height="60" rx="3" fill="none" stroke="#dce4c0" stroke-width="0.7" stroke-dasharray="3,2"/>
+<text x="332" y="473" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">GPIO INPUT</text>
 
 <!-- BTN0 -->
-<g transform="translate(262,548)">
+<g transform="translate(262,490)">
   <rect x="-3" y="-3" width="26" height="26" rx="2" fill="#2a2a2a" stroke="#555" stroke-width="1"/>
   <!-- 4 corner pads -->
   <rect x="-3" y="-3" width="7"  height="7"  rx="1" fill="#d09020"/>
@@ -594,7 +534,7 @@
 </g>
 
 <!-- BTN1 -->
-<g transform="translate(338,548)">
+<g transform="translate(338,490)">
   <rect x="-3" y="-3" width="26" height="26" rx="2" fill="#2a2a2a" stroke="#555" stroke-width="1"/>
   <rect x="-3" y="-3" width="7"  height="7"  rx="1" fill="#d09020"/>
   <rect x="16" y="-3" width="7"  height="7"  rx="1" fill="#d09020"/>
@@ -608,7 +548,7 @@
 </g>
 
 <!-- DIP Switch SW3 (4-position) -->
-<g transform="translate(398,544)">
+<g transform="translate(398,486)">
   <rect x="0" y="0" width="60" height="32" rx="2" fill="#1a1a50" stroke="#3030a0" stroke-width="1"/>
   <!-- 4 rocker switches -->
   <g fill="#c8c8c8" stroke="#888" stroke-width="0.5">
@@ -640,91 +580,209 @@
 </g>
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     COPPER TRACES  — main signal routing
+     BOTTOM EDGE CONNECTORS — all interface headers along bottom perimeter
+     Pitch 14px, body y=572-594, pins point toward bottom edge
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<!-- Connector zone label -->
+<text x="460" y="565" text-anchor="middle" font-family="monospace" font-size="6.5"
+      fill="#dce4c0" letter-spacing="2">── EXPANSION HEADERS ──</text>
+
+<!-- J1 PWR  (3-pin: +5V GND GND)  x=228-274 -->
+<text x="251" y="563" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">J1 PWR</text>
+<g id="j1">
+  <rect x="228" y="572" width="46" height="22" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
+  <rect x="232" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="246" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="260" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <text x="237" y="603" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">+5V</text>
+  <text x="251" y="603" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">GND</text>
+  <text x="265" y="603" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">GND</text>
+  <!-- pins through board -->
+  <line x1="237" y1="594" x2="237" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="251" y1="594" x2="251" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="265" y1="594" x2="265" y2="610" stroke="#d09020" stroke-width="2"/>
+</g>
+
+<!-- J2 UART (6-pin: GND VCC TX RX RTS CTS)  x=295-383 -->
+<text x="339" y="563" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">J2 UART</text>
+<g id="j2">
+  <rect x="295" y="572" width="88" height="22" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
+  <rect x="299" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="313" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="327" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="341" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="355" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="369" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <text x="304" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">GND</text>
+  <text x="318" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">VCC</text>
+  <text x="332" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">TX</text>
+  <text x="346" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">RX</text>
+  <text x="360" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">RTS</text>
+  <text x="374" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">CTS</text>
+  <line x1="304" y1="594" x2="304" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="318" y1="594" x2="318" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="332" y1="594" x2="332" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="346" y1="594" x2="346" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="360" y1="594" x2="360" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="374" y1="594" x2="374" y2="610" stroke="#d09020" stroke-width="2"/>
+</g>
+
+<!-- J3 DBG (4-pin: VCC GND SWDIO SWCLK)  x=400-460 -->
+<text x="430" y="563" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">J3 DBG</text>
+<g id="j3">
+  <rect x="400" y="572" width="60" height="22" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
+  <rect x="404" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="418" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="432" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="446" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <text x="409" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">VCC</text>
+  <text x="423" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">GND</text>
+  <text x="437" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">SWD</text>
+  <text x="451" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">CLK</text>
+  <line x1="409" y1="594" x2="409" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="423" y1="594" x2="423" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="437" y1="594" x2="437" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="451" y1="594" x2="451" y2="610" stroke="#d09020" stroke-width="2"/>
+</g>
+
+<!-- J5 I2C (4-pin: VCC GND SDA SCL)  x=477-537 -->
+<text x="507" y="563" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">J5 I2C</text>
+<g id="j5">
+  <rect x="477" y="572" width="60" height="22" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
+  <rect x="481" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="495" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="509" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="523" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <text x="486" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">VCC</text>
+  <text x="500" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">GND</text>
+  <text x="514" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">SDA</text>
+  <text x="528" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">SCL</text>
+  <line x1="486" y1="594" x2="486" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="500" y1="594" x2="500" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="514" y1="594" x2="514" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="528" y1="594" x2="528" y2="610" stroke="#d09020" stroke-width="2"/>
+</g>
+
+<!-- J4 GPIO (8-pin: GP0 GP1 GP2 GP3 SDA SCL GND VCC)  x=554-670 -->
+<text x="612" y="563" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">J4 GPIO</text>
+<g id="j4">
+  <rect x="554" y="572" width="116" height="22" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
+  <rect x="558" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="572" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="586" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="600" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="614" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="628" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="642" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <rect x="656" y="578" width="10" height="10" rx="1" fill="#d09020"/>
+  <text x="563" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">GP0</text>
+  <text x="577" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">GP1</text>
+  <text x="591" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">GP2</text>
+  <text x="605" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">GP3</text>
+  <text x="619" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">SDA</text>
+  <text x="633" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">SCL</text>
+  <text x="647" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">GND</text>
+  <text x="661" y="603" text-anchor="middle" font-family="monospace" font-size="4.5" fill="#b0c090">VCC</text>
+  <line x1="563" y1="594" x2="563" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="577" y1="594" x2="577" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="591" y1="594" x2="591" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="605" y1="594" x2="605" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="619" y1="594" x2="619" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="633" y1="594" x2="633" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="647" y1="594" x2="647" y2="610" stroke="#d09020" stroke-width="2"/>
+  <line x1="661" y1="594" x2="661" y2="610" stroke="#d09020" stroke-width="2"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     COPPER TRACES — clean Manhattan routing, no chip overlap
+     Routing channels:
+       Top    y=78   (above all chips)
+       MemCPU y=228  (between memory bottom y=211 and CPU top y=248)
+       RBus   x=648  (right of peripheral chips, x=641)
+       CBus   x=507  (between CPU right x=501 and peripherals left x=537)
+       Below  y=455  (below all chips: CPU bot y=444, GPIO IN bot y=434)
+       Near   y=545  (below buttons y=485, above connectors y=572)
      ═══════════════════════════════════════════════════════════════════════ -->
 <g stroke="#c8820c" fill="none" stroke-linecap="round" stroke-linejoin="round">
 
-  <!-- Power bus: left rail to CPU left side -->
-  <polyline points="72,185 72,90 305,90 305,290" stroke-width="2.5" opacity="0.6"/>
+  <!-- Power left spine (x=110): board top→below CPU, dashed power plane -->
+  <line x1="110" y1="90"  x2="110" y2="455" stroke-width="2" stroke-dasharray="6,3" opacity="0.5"/>
+  <!-- Power branch: spine → LDO regulator -->
+  <polyline points="110,218 84,218" stroke-width="2" opacity="0.6"/>
+  <!-- Power → J1 connector (bottom) -->
+  <polyline points="110,455 251,455 251,572" stroke-width="2"/>
 
-  <!-- CPU top ↔ ROM (address/data bus bundle) -->
-  <polyline points="355,248 355,220 195,220 195,212" stroke-width="1.5"/>
-  <polyline points="372,248 372,216 200,216 200,212" stroke-width="1.5"/>
-  <polyline points="389,248 389,212 205,212 205,212" stroke-width="1.5"/>
+  <!-- CPU↔ROM data bus (3 lines via MemCPU channel y=228) -->
+  <polyline points="330,248 330,228 183,228 183,212" stroke-width="1.5"/>
+  <polyline points="355,248 355,224 178,224 178,212" stroke-width="1.5"/>
+  <polyline points="372,248 372,220 173,220 173,212" stroke-width="1.5"/>
 
-  <!-- CPU top ↔ RAM -->
-  <polyline points="406,248 406,200 370,200 370,200" stroke-width="1.5"/>
-  <polyline points="423,248 423,196 375,196 375,200" stroke-width="1.5"/>
-  <polyline points="440,248 440,192 380,192 380,200" stroke-width="1.5"/>
+  <!-- CPU↔RAM data bus (2 lines via y=228) -->
+  <polyline points="406,248 406,228 380,228 380,200" stroke-width="1.5"/>
+  <polyline points="423,248 423,222 375,222 375,200" stroke-width="1.5"/>
 
-  <!-- Crystal to CPU -->
-  <polyline points="492,156 492,200 480,200 480,248" stroke-width="1.2"/>
-  <polyline points="514,156 514,210 466,210 466,248" stroke-width="1.2"/>
+  <!-- Crystal Y1 → CPU top pins (via MemCPU channel) -->
+  <polyline points="492,156 492,228 480,228 480,248" stroke-width="1.2"/>
+  <polyline points="514,156 514,222 466,222 466,248" stroke-width="1.2"/>
 
-  <!-- CPU right ↔ UART (U4) -->
-  <polyline points="501,265 530,265 530,172 548,172" stroke-width="1.5"/>
-  <polyline points="501,282 525,282 525,180 548,180" stroke-width="1.5"/>
+  <!-- CPU sysbus right side → CBus (x=507) → each peripheral left side -->
+  <polyline points="501,265 507,265 507,160 537,160" stroke-width="1.5"/>
+  <polyline points="501,282 507,282 507,236 537,236" stroke-width="1.5"/>
+  <polyline points="501,307 507,307 507,292 537,292" stroke-width="1.5"/>
+  <polyline points="501,341 507,341 507,352 537,352" stroke-width="1.5"/>
+  <polyline points="501,375 507,375 507,412 537,412" stroke-width="1.5"/>
 
-  <!-- CPU right ↔ Timer (U5) -->
-  <polyline points="501,307 535,307 535,240 548,240" stroke-width="1.5"/>
+  <!-- 7-SEG (U9) via top channel (y=78): branch off CBus at y=160, right to U9 -->
+  <polyline points="507,160 507,78 740,78 740,220" stroke-width="1.2"/>
 
-  <!-- CPU right ↔ CLINT (U6) -->
-  <polyline points="501,332 540,332 540,296 548,296" stroke-width="1.5"/>
+  <!-- GPIO OUT (U7 right) → RBus down → LED branches (above LEDs at y=473) -->
+  <polyline points="641,356 648,356 648,473" stroke-width="1.5"/>
+  <polyline points="648,473 634,473 634,480" stroke-width="1.2"/>
+  <polyline points="648,473 676,473 676,480" stroke-width="1.2"/>
+  <polyline points="648,473 718,473 718,480" stroke-width="1.2"/>
+  <polyline points="648,473 760,473 760,480" stroke-width="1.2"/>
 
-  <!-- CPU right ↔ GPIO_OUT (U7) -->
-  <polyline points="501,358 535,358 535,356 548,356" stroke-width="1.5"/>
+  <!-- GPIO IN (U8) ← buttons/DIP via below-CPU channel (y=455) -->
+  <polyline points="537,412 507,412 507,455 272,455 272,490" stroke-width="1.5"/>
+  <polyline points="507,455 348,455 348,490" stroke-width="1.2"/>
+  <polyline points="507,455 428,455 428,486" stroke-width="1.2"/>
 
-  <!-- CPU right ↔ GPIO_IN (U8) -->
-  <polyline points="501,375 535,375 535,416 548,416" stroke-width="1.5"/>
+  <!-- Buzzer ← GPIO OUT area via RBus, above LEDs -->
+  <polyline points="648,430 798,430 798,460" stroke-width="1.2"/>
 
-  <!-- GPIO_OUT ↔ LEDs (4 traces going down) -->
-  <polyline points="630,434 630,540" stroke-width="1.5"/>
-  <polyline points="643,434 643,558 650,558 650,540" stroke-width="1.5"/>
-  <polyline points="549,434 549,470 686,470 686,540" stroke-width="1.5"/>
-  <polyline points="560,434 560,480 728,480 728,540" stroke-width="1.5"/>
+  <!-- UART (U4 right) → RBus → below-all channel → J2 connector -->
+  <polyline points="641,172 648,172 648,455 507,455 507,545 332,545 332,572" stroke-width="1.5"/>
 
-  <!-- GPIO_IN ↔ Buttons and DIP -->
-  <polyline points="548,406 520,406 520,490 272,490 272,544" stroke-width="1.5"/>
-  <polyline points="548,416 515,416 515,496 348,496 348,544" stroke-width="1.5"/>
-  <polyline points="548,426 510,426 510,502 413,502 413,536" stroke-width="1.5"/>
+  <!-- DBG → J3 connector (via top channel then down CBus) -->
+  <polyline points="474,248 474,228 507,228 507,78 840,78 840,545 423,545 423,572" stroke-width="1.2"/>
 
-  <!-- UART chip ↔ UART header -->
-  <polyline points="630,166 718,166 718,102 754,102" stroke-width="1.5"/>
-  <polyline points="630,174 724,174 724,116 754,116" stroke-width="1.5"/>
+  <!-- I2C → J5 connector (via GPIO IN pins, left spine) -->
+  <polyline points="110,380 110,455 507,455 507,545 500,545 500,572" stroke-width="1.2" stroke-dasharray="4,2"/>
 
-  <!-- 7-Seg ↔ U9 ctrl: separate trace from CPU -->
-  <polyline points="501,341 545,341 545,238 700,238" stroke-width="1.2"/>
-
-  <!-- Buzzer from GPIO_OUT area -->
-  <polyline points="630,426 680,426 680,490 820,490 820,482" stroke-width="1.2"/>
-
-  <!-- I2C header ↔ right GPIO header (SDA/SCL) -->
-  <polyline points="50,466 140,466 140,470 900,470" stroke-width="1.2" stroke-dasharray="4,2" opacity="0.6"/>
-  <polyline points="50,480 145,480 145,476 900,476" stroke-width="1.2" stroke-dasharray="4,2" opacity="0.6"/>
-
-  <!-- Debug header traces to CPU (simplified) -->
-  <polyline points="840,110 840,200 835,200 835,248 474,248" stroke-width="1.2"/>
+  <!-- GPIO → J4 connector (via RBus down to near-bottom channel) -->
+  <polyline points="648,430 648,545 605,545 605,572" stroke-width="1.5"/>
 
 </g>
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     VIAS — scattered at trace junctions
+     VIAS — at key trace junctions
      ═══════════════════════════════════════════════════════════════════════ -->
 <g stroke="none">
-  <!-- via = copper annular ring with drilled hole -->
-  <circle cx="530" cy="265" r="5" fill="#c8820c"/><circle cx="530" cy="265" r="2.5" fill="#0f3d14"/>
-  <circle cx="535" cy="307" r="5" fill="#c8820c"/><circle cx="535" cy="307" r="2.5" fill="#0f3d14"/>
-  <circle cx="540" cy="332" r="5" fill="#c8820c"/><circle cx="540" cy="332" r="2.5" fill="#0f3d14"/>
-  <circle cx="630" cy="434" r="5" fill="#c8820c"/><circle cx="630" cy="434" r="2.5" fill="#0f3d14"/>
-  <circle cx="355" cy="220" r="4" fill="#c8820c"/><circle cx="355" cy="220" r="2" fill="#0f3d14"/>
-  <circle cx="406" cy="200" r="4" fill="#c8820c"/><circle cx="406" cy="200" r="2" fill="#0f3d14"/>
-  <circle cx="520" cy="490" r="4" fill="#c8820c"/><circle cx="520" cy="490" r="2" fill="#0f3d14"/>
-  <circle cx="718" cy="166" r="4" fill="#c8820c"/><circle cx="718" cy="166" r="2" fill="#0f3d14"/>
-  <circle cx="680" cy="490" r="4" fill="#c8820c"/><circle cx="680" cy="490" r="2" fill="#0f3d14"/>
-  <circle cx="305" cy="290" r="5" fill="#c8820c"/><circle cx="305" cy="290" r="2.5" fill="#0f3d14"/>
-  <circle cx="140" cy="466" r="4" fill="#c8820c"/><circle cx="140" cy="466" r="2" fill="#0f3d14"/>
-  <circle cx="492" cy="200" r="4" fill="#c8820c"/><circle cx="492" cy="200" r="2" fill="#0f3d14"/>
-  <circle cx="835" cy="200" r="4" fill="#c8820c"/><circle cx="835" cy="200" r="2" fill="#0f3d14"/>
+  <circle cx="507" cy="265" r="4.5" fill="#c8820c"/><circle cx="507" cy="265" r="2" fill="#0f3d14"/>
+  <circle cx="507" cy="282" r="4.5" fill="#c8820c"/><circle cx="507" cy="282" r="2" fill="#0f3d14"/>
+  <circle cx="507" cy="307" r="4.5" fill="#c8820c"/><circle cx="507" cy="307" r="2" fill="#0f3d14"/>
+  <circle cx="507" cy="341" r="4.5" fill="#c8820c"/><circle cx="507" cy="341" r="2" fill="#0f3d14"/>
+  <circle cx="507" cy="375" r="4.5" fill="#c8820c"/><circle cx="507" cy="375" r="2" fill="#0f3d14"/>
+  <circle cx="507" cy="160" r="4.5" fill="#c8820c"/><circle cx="507" cy="160" r="2" fill="#0f3d14"/>
+  <circle cx="507" cy="455" r="5"   fill="#c8820c"/><circle cx="507" cy="455" r="2.2" fill="#0f3d14"/>
+  <circle cx="507" cy="545" r="5"   fill="#c8820c"/><circle cx="507" cy="545" r="2.2" fill="#0f3d14"/>
+  <circle cx="648" cy="356" r="4.5" fill="#c8820c"/><circle cx="648" cy="356" r="2" fill="#0f3d14"/>
+  <circle cx="648" cy="455" r="4.5" fill="#c8820c"/><circle cx="648" cy="455" r="2" fill="#0f3d14"/>
+  <circle cx="648" cy="473" r="4.5" fill="#c8820c"/><circle cx="648" cy="473" r="2" fill="#0f3d14"/>
+  <circle cx="330" cy="228" r="4"   fill="#c8820c"/><circle cx="330" cy="228" r="1.8" fill="#0f3d14"/>
+  <circle cx="406" cy="228" r="4"   fill="#c8820c"/><circle cx="406" cy="228" r="1.8" fill="#0f3d14"/>
+  <circle cx="110" cy="455" r="4.5" fill="#c8820c"/><circle cx="110" cy="455" r="2" fill="#0f3d14"/>
 </g>
 
 <!-- ═══════════════════════════════════════════════════════════════════════
