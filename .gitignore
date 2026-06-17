@@ -15,6 +15,13 @@ build/
 .DS_Store
 .AppleDouble
 .LSOverride
+Icon?
+._*
+
+# LibreOffice / Office temp and lock files
+*.tmp
+~$*
+.~lock.*#
 
 # VSCode local settings (keep shared config, ignore personal overrides)
 .vscode/.browse.c_cpp.db*
