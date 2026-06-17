@@ -1,0 +1,754 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" width="960" height="680">
+<defs>
+  <filter id="pcbshadow">
+    <feDropShadow dx="5" dy="5" stdDeviation="7" flood-color="#000" flood-opacity="0.55"/>
+  </filter>
+  <filter id="ledshadow">
+    <feGaussianBlur stdDeviation="3" result="blur"/>
+    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <!-- Silk hatch for ground plane region -->
+  <pattern id="gpfill" width="6" height="6" patternUnits="userSpaceOnUse">
+    <rect width="6" height="6" fill="#175220"/>
+    <path d="M0,6 L6,0" stroke="#1d612a" stroke-width="0.6"/>
+  </pattern>
+</defs>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PCB SUBSTRATE
+     ═══════════════════════════════════════════════════════════════════════ -->
+<rect x="18" y="18" width="924" height="644" rx="16" fill="#1a5f26" stroke="#0b3410" stroke-width="4" filter="url(#pcbshadow)"/>
+<!-- inner edge highlight -->
+<rect x="22" y="22" width="916" height="636" rx="14" fill="none" stroke="#226e2c" stroke-width="1.5"/>
+
+<!-- Mounting holes (plated through) -->
+<g fill="#0b3410" stroke="#c8820c" stroke-width="1.5">
+  <circle cx="46" cy="46" r="7"/><circle cx="46" cy="46" r="3.5" fill="#222" stroke="none"/>
+  <circle cx="914" cy="46" r="7"/><circle cx="914" cy="46" r="3.5" fill="#222" stroke="none"/>
+  <circle cx="46" cy="634" r="7"/><circle cx="46" cy="634" r="3.5" fill="#222" stroke="none"/>
+  <circle cx="914" cy="634" r="7"/><circle cx="914" cy="634" r="3.5" fill="#222" stroke="none"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     BOARD IDENTIFICATION (silkscreen layer)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<text x="480" y="44" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold"
+      fill="#dce4c0" letter-spacing="3">CS281 VIRTUAL DEVELOPMENT BOARD</text>
+<text x="480" y="59" text-anchor="middle" font-family="monospace" font-size="8"
+      fill="#b0c090" letter-spacing="1.5">RISC-V RV32IM + Zicsr  ·  DREXEL UNIVERSITY  ·  REV 1.0</text>
+<!-- board edge fiducials -->
+<circle cx="100" cy="46" r="4" fill="none" stroke="#dce4c0" stroke-width="1"/>
+<circle cx="100" cy="46" r="1.5" fill="#dce4c0"/>
+<circle cx="860" cy="46" r="4" fill="none" stroke="#dce4c0" stroke-width="1"/>
+<circle cx="860" cy="46" r="1.5" fill="#dce4c0"/>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     DREXEL DRAGON ICON + WORDMARK — lower-left corner
+     PNG embedded as base64 (official Drexel dragon, navy colorway)
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<!-- gold backing rectangle, slightly larger than the image, gives a PCB-art frame -->
+<rect x="34" y="475" width="148" height="106" rx="6" fill="#c8820c" opacity="0.18"/>
+<rect x="36" y="477" width="144" height="102" rx="5" fill="none" stroke="#c8820c" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
+
+<!-- Actual Drexel dragon icon (official PNG, blue colorway) -->
+<image href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADUCAMAAAARFe6HAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAwBQTFRFR3BMBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNBihNDEWfFgAAAP90Uk5TAAoFA+799nb++gcCNBz3ATrxDDMS+dfODmKz7fggbfvimB8LD0X1mfPU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"
+       x="38" y="479" width="140" height="99"
+       preserveAspectRatio="xMidYMid meet"/>
+
+<!-- Circuit traces radiating right from the icon frame -->
+<g stroke="#c8820c" fill="none">
+  <line x1="182" y1="505" x2="222" y2="505" stroke-width="2.5"/>
+  <line x1="182" y1="528" x2="237" y2="528" stroke-width="2.5"/>
+  <line x1="182" y1="551" x2="222" y2="551" stroke-width="2.5"/>
+</g>
+<circle cx="222" cy="505" r="4.5" fill="#c8820c"/><circle cx="222" cy="505" r="2" fill="#1a5f26"/>
+<circle cx="237" cy="528" r="4.5" fill="#c8820c"/><circle cx="237" cy="528" r="2" fill="#1a5f26"/>
+<circle cx="222" cy="551" r="4.5" fill="#c8820c"/><circle cx="222" cy="551" r="2" fill="#1a5f26"/>
+
+<!-- Wordmark below icon -->
+<text x="110" y="593" text-anchor="middle" font-family="Arial Black, Arial, sans-serif"
+      font-size="11" font-weight="900" fill="#c8820c" letter-spacing="4">DREXEL</text>
+<text x="110" y="605" text-anchor="middle" font-family="monospace" font-size="6"
+      fill="#a08030" letter-spacing="2.5">UNIVERSITY</text>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     POWER SECTION — left column
+     ═══════════════════════════════════════════════════════════════════════ -->
+<!-- Silkscreen zone label -->
+<text x="82" y="86" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">POWER</text>
+<rect x="35" y="90" width="94" height="370" rx="4" fill="none" stroke="#dce4c0" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+<!-- J1 — 3-pin power connector (PWR, GND, GND) -->
+<g transform="translate(50,105)">
+  <rect x="0" y="0" width="22" height="58" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
+  <!-- 3 pin holes -->
+  <rect x="5" y="6"  width="12" height="10" rx="1" fill="#d09020"/>
+  <rect x="5" y="24" width="12" height="10" rx="1" fill="#d09020"/>
+  <rect x="5" y="42" width="12" height="10" rx="1" fill="#d09020"/>
+  <text x="11" y="9"  text-anchor="middle" font-family="monospace" font-size="4" fill="#1a1a1a">+</text>
+  <text x="11" y="27" text-anchor="middle" font-family="monospace" font-size="4" fill="#1a1a1a">G</text>
+  <text x="11" y="45" text-anchor="middle" font-family="monospace" font-size="4" fill="#1a1a1a">G</text>
+</g>
+<text x="61" y="173" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">J1</text>
+<text x="61" y="181" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">PWR</text>
+
+<!-- U_REG — 3.3V regulator (SOT-223) -->
+<g transform="translate(44,196)">
+  <rect x="0" y="0" width="40" height="28" rx="2" fill="#1c1c1c" stroke="#444" stroke-width="1"/>
+  <!-- 3 pins on bottom, 1 tab on top -->
+  <rect x="3"  y="26" width="8" height="6" rx="1" fill="#d09020"/>
+  <rect x="16" y="26" width="8" height="6" rx="1" fill="#d09020"/>
+  <rect x="29" y="26" width="8" height="6" rx="1" fill="#d09020"/>
+  <rect x="5"  y="-5" width="30" height="6" rx="1" fill="#d09020"/>
+  <text x="20" y="11" text-anchor="middle" font-family="monospace" font-size="5" fill="#dddddd">LDO</text>
+  <text x="20" y="20" text-anchor="middle" font-family="monospace" font-size="5" fill="#cccccc">3V3</text>
+</g>
+<text x="64" y="238" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">U10</text>
+
+<!-- Decoupling caps near regulator -->
+<g fill="#1c1c1c" stroke="#555" stroke-width="0.8">
+  <rect x="95" y="198" width="14" height="8" rx="1"/>
+  <rect x="95" y="212" width="14" height="8" rx="1"/>
+  <rect x="95" y="226" width="14" height="8" rx="1"/>
+</g>
+<g fill="#d09020">
+  <rect x="95" y="199" width="4" height="6" rx="0.5"/>
+  <rect x="105" y="199" width="4" height="6" rx="0.5"/>
+  <rect x="95" y="213" width="4" height="6" rx="0.5"/>
+  <rect x="105" y="213" width="4" height="6" rx="0.5"/>
+  <rect x="95" y="227" width="4" height="6" rx="0.5"/>
+  <rect x="105" y="227" width="4" height="6" rx="0.5"/>
+</g>
+<text x="102" y="244" text-anchor="middle" font-family="monospace" font-size="5" fill="#dce4c0">C1-3</text>
+
+<!-- Power indicator LED -->
+<ellipse cx="64" cy="270" rx="10" ry="10" fill="#10c030" opacity="0.9" filter="url(#ledshadow)"/>
+<ellipse cx="64" cy="268" rx="5" ry="4" fill="#60ff80" opacity="0.7"/>
+<rect x="59" y="278" width="4" height="8" fill="#d09020"/>
+<rect x="65" y="278" width="4" height="8" fill="#d09020"/>
+<text x="64" y="296" text-anchor="middle" font-family="monospace" font-size="5.5" fill="#dce4c0">PWR</text>
+<text x="64" y="303" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">D0</text>
+
+<!-- Power rail traces (horizontal) -->
+<line x1="72" y1="163" x2="72" y2="196" stroke="#c8820c" stroke-width="2.5"/>
+<line x1="64" y1="224" x2="64" y2="260" stroke="#c8820c" stroke-width="2"/>
+<!-- main power bus horizontal -->
+<line x1="35" y1="90" x2="35" y2="630" stroke="#c8820c" stroke-width="1.5" opacity="0.3"/>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     CPU U1 — RV32IM QFP  (center of board)
+     Body: (305, 248) → (485, 428)   center: (395, 338)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<!-- CPU pin traces first (under body) -->
+<!-- Top pins (10) -->
+<g fill="#d09020">
+  <rect x="321" y="232" width="9" height="16" rx="1"/>
+  <rect x="338" y="232" width="9" height="16" rx="1"/>
+  <rect x="355" y="232" width="9" height="16" rx="1"/>
+  <rect x="372" y="232" width="9" height="16" rx="1"/>
+  <rect x="389" y="232" width="9" height="16" rx="1"/>
+  <rect x="406" y="232" width="9" height="16" rx="1"/>
+  <rect x="423" y="232" width="9" height="16" rx="1"/>
+  <rect x="440" y="232" width="9" height="16" rx="1"/>
+  <rect x="457" y="232" width="9" height="16" rx="1"/>
+  <rect x="474" y="232" width="9" height="16" rx="1"/>
+</g>
+<!-- Bottom pins (10) -->
+<g fill="#d09020">
+  <rect x="321" y="428" width="9" height="16" rx="1"/>
+  <rect x="338" y="428" width="9" height="16" rx="1"/>
+  <rect x="355" y="428" width="9" height="16" rx="1"/>
+  <rect x="372" y="428" width="9" height="16" rx="1"/>
+  <rect x="389" y="428" width="9" height="16" rx="1"/>
+  <rect x="406" y="428" width="9" height="16" rx="1"/>
+  <rect x="423" y="428" width="9" height="16" rx="1"/>
+  <rect x="440" y="428" width="9" height="16" rx="1"/>
+  <rect x="457" y="428" width="9" height="16" rx="1"/>
+  <rect x="474" y="428" width="9" height="16" rx="1"/>
+</g>
+<!-- Left pins (10) -->
+<g fill="#d09020">
+  <rect x="289" y="256" width="16" height="9" rx="1"/>
+  <rect x="289" y="273" width="16" height="9" rx="1"/>
+  <rect x="289" y="290" width="16" height="9" rx="1"/>
+  <rect x="289" y="307" width="16" height="9" rx="1"/>
+  <rect x="289" y="324" width="16" height="9" rx="1"/>
+  <rect x="289" y="341" width="16" height="9" rx="1"/>
+  <rect x="289" y="358" width="16" height="9" rx="1"/>
+  <rect x="289" y="375" width="16" height="9" rx="1"/>
+  <rect x="289" y="392" width="16" height="9" rx="1"/>
+  <rect x="289" y="409" width="16" height="9" rx="1"/>
+</g>
+<!-- Right pins (10) -->
+<g fill="#d09020">
+  <rect x="485" y="256" width="16" height="9" rx="1"/>
+  <rect x="485" y="273" width="16" height="9" rx="1"/>
+  <rect x="485" y="290" width="16" height="9" rx="1"/>
+  <rect x="485" y="307" width="16" height="9" rx="1"/>
+  <rect x="485" y="324" width="16" height="9" rx="1"/>
+  <rect x="485" y="341" width="16" height="9" rx="1"/>
+  <rect x="485" y="358" width="16" height="9" rx="1"/>
+  <rect x="485" y="375" width="16" height="9" rx="1"/>
+  <rect x="485" y="392" width="16" height="9" rx="1"/>
+  <rect x="485" y="409" width="16" height="9" rx="1"/>
+</g>
+<!-- CPU Body -->
+<rect x="305" y="248" width="180" height="180" rx="4" fill="#181818" stroke="#383838" stroke-width="1.5"/>
+<!-- Die area (inner lighter square) -->
+<rect x="318" y="261" width="154" height="154" rx="2" fill="#141414" stroke="#2a2a2a" stroke-width="1"/>
+<!-- Die blocks (functional units) -->
+<rect x="322" y="265" width="46" height="40" rx="1" fill="#1e2e1e" stroke="#2a4a2a" stroke-width="0.8"/>
+<rect x="374" y="265" width="50" height="40" rx="1" fill="#1e2e1e" stroke="#2a4a2a" stroke-width="0.8"/>
+<rect x="430" y="265" width="38" height="40" rx="1" fill="#1e2a30" stroke="#2a3a4a" stroke-width="0.8"/>
+<rect x="322" y="311" width="50" height="56" rx="1" fill="#2a1e1e" stroke="#4a2a2a" stroke-width="0.8"/>
+<rect x="378" y="311" width="90" height="56" rx="1" fill="#1e1e30" stroke="#2a2a4a" stroke-width="0.8"/>
+<rect x="322" y="373" width="146" height="38" rx="1" fill="#1c1c28" stroke="#2a2a3a" stroke-width="0.8"/>
+<!-- Die unit labels -->
+<text x="345" y="281" text-anchor="middle" font-family="monospace" font-size="5" fill="#80c080">ALU</text>
+<text x="399" y="281" text-anchor="middle" font-family="monospace" font-size="5" fill="#80c080">REGs</text>
+<text x="449" y="281" text-anchor="middle" font-family="monospace" font-size="5" fill="#8888dd">CSR</text>
+<text x="347" y="340" text-anchor="middle" font-family="monospace" font-size="5" fill="#dd8888">IF/ID</text>
+<text x="423" y="336" text-anchor="middle" font-family="monospace" font-size="5" fill="#8888dd">MEM</text>
+<text x="423" y="345" text-anchor="middle" font-family="monospace" font-size="5" fill="#8888dd">CTRL</text>
+<text x="395" y="394" text-anchor="middle" font-family="monospace" font-size="5" fill="#80c0c0">SYSBUS INTERFACE</text>
+<!-- Pin 1 marker -->
+<circle cx="313" cy="256" r="4" fill="#c8820c"/>
+<!-- Chip label -->
+<text x="395" y="408" text-anchor="middle" font-family="monospace" font-size="9" fill="#eeeeee" font-weight="bold">CS281-CPU</text>
+<text x="395" y="418" text-anchor="middle" font-family="monospace" font-size="8" fill="#c8c8c8">RV32IM+Zicsr  U1</text>
+
+<!-- Silkscreen outline around CPU -->
+<rect x="286" y="229" width="218" height="218" rx="5" fill="none" stroke="#dce4c0" stroke-width="0.8" stroke-dasharray="4,2"/>
+<text x="286" y="226" font-family="monospace" font-size="7" fill="#dce4c0">U1</text>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     ROM U2 — 256KB  (upper-left of CPU)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<g transform="translate(138, 120)">
+  <!-- SOIC-16 pins left -->
+  <g fill="#d09020">
+    <rect x="-12" y="4"  width="12" height="7" rx="1"/>
+    <rect x="-12" y="15" width="12" height="7" rx="1"/>
+    <rect x="-12" y="26" width="12" height="7" rx="1"/>
+    <rect x="-12" y="37" width="12" height="7" rx="1"/>
+    <rect x="-12" y="48" width="12" height="7" rx="1"/>
+    <rect x="-12" y="59" width="12" height="7" rx="1"/>
+    <rect x="-12" y="70" width="12" height="7" rx="1"/>
+    <rect x="-12" y="81" width="12" height="7" rx="1"/>
+  </g>
+  <!-- SOIC-16 pins right -->
+  <g fill="#d09020">
+    <rect x="102" y="4"  width="12" height="7" rx="1"/>
+    <rect x="102" y="15" width="12" height="7" rx="1"/>
+    <rect x="102" y="26" width="12" height="7" rx="1"/>
+    <rect x="102" y="37" width="12" height="7" rx="1"/>
+    <rect x="102" y="48" width="12" height="7" rx="1"/>
+    <rect x="102" y="59" width="12" height="7" rx="1"/>
+    <rect x="102" y="70" width="12" height="7" rx="1"/>
+    <rect x="102" y="81" width="12" height="7" rx="1"/>
+  </g>
+  <!-- Body -->
+  <rect x="0" y="0" width="102" height="92" rx="3" fill="#1c1c1c" stroke="#3a3a3a" stroke-width="1"/>
+  <rect x="5" y="5"  width="92" height="82" rx="2" fill="#141414"/>
+  <circle cx="8" cy="8" r="3" fill="#2a3a2a"/>
+  <text x="51" y="36" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#e8e8e8">ROM</text>
+  <text x="51" y="48" text-anchor="middle" font-family="monospace" font-size="8" fill="#d0d8e0">256KB</text>
+  <text x="51" y="62" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#b8c0c8">0x20000000</text>
+  <text x="51" y="76" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#b8c0c8">U2</text>
+</g>
+<rect x="122" y="115" width="122" height="108" rx="4" fill="none" stroke="#dce4c0" stroke-width="0.7" stroke-dasharray="3,2"/>
+<text x="122" y="112" font-family="monospace" font-size="7" fill="#dce4c0">U2 ROM</text>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     RAM U3 — 512KB  (upper-center-right of CPU)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<g transform="translate(304, 108)">
+  <g fill="#d09020">
+    <rect x="-12" y="4"  width="12" height="7" rx="1"/>
+    <rect x="-12" y="15" width="12" height="7" rx="1"/>
+    <rect x="-12" y="26" width="12" height="7" rx="1"/>
+    <rect x="-12" y="37" width="12" height="7" rx="1"/>
+    <rect x="-12" y="48" width="12" height="7" rx="1"/>
+    <rect x="-12" y="59" width="12" height="7" rx="1"/>
+    <rect x="-12" y="70" width="12" height="7" rx="1"/>
+    <rect x="-12" y="81" width="12" height="7" rx="1"/>
+  </g>
+  <g fill="#d09020">
+    <rect x="112" y="4"  width="12" height="7" rx="1"/>
+    <rect x="112" y="15" width="12" height="7" rx="1"/>
+    <rect x="112" y="26" width="12" height="7" rx="1"/>
+    <rect x="112" y="37" width="12" height="7" rx="1"/>
+    <rect x="112" y="48" width="12" height="7" rx="1"/>
+    <rect x="112" y="59" width="12" height="7" rx="1"/>
+    <rect x="112" y="70" width="12" height="7" rx="1"/>
+    <rect x="112" y="81" width="12" height="7" rx="1"/>
+  </g>
+  <rect x="0" y="0" width="112" height="92" rx="3" fill="#1c1c1c" stroke="#3a3a3a" stroke-width="1"/>
+  <rect x="5" y="5"  width="102" height="82" rx="2" fill="#141414"/>
+  <circle cx="8" cy="8" r="3" fill="#2a2a3a"/>
+  <text x="56" y="36" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#e8e8e8">SRAM</text>
+  <text x="56" y="48" text-anchor="middle" font-family="monospace" font-size="8" fill="#d0d8e0">512KB</text>
+  <text x="56" y="62" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#b8c0c8">0x40000000</text>
+  <text x="56" y="76" text-anchor="middle" font-family="monospace" font-size="7.5" fill="#b8c0c8">U3</text>
+</g>
+<rect x="288" y="103" width="142" height="108" rx="4" fill="none" stroke="#dce4c0" stroke-width="0.7" stroke-dasharray="3,2"/>
+<text x="288" y="100" font-family="monospace" font-size="7" fill="#dce4c0">U3 RAM</text>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PERIPHERAL CHIPS — right column of CPU
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<!-- Helper macro-like structure for small SOIC chips on right side -->
+<!-- Each chip: body 80x38, pins on left side (8 pins = 4 per long side)   -->
+
+<!-- U4 UART 0xe0001800 -->
+<g transform="translate(548, 152)">
+  <g fill="#d09020">
+    <rect x="-11" y="4" width="11" height="6" rx="1"/><rect x="-11" y="14" width="11" height="6" rx="1"/>
+    <rect x="-11" y="24" width="11" height="6" rx="1"/><rect x="-11" y="34" width="11" height="6" rx="1"/>
+    <rect x="82"  y="4" width="11" height="6" rx="1"/><rect x="82"  y="14" width="11" height="6" rx="1"/>
+    <rect x="82"  y="24" width="11" height="6" rx="1"/><rect x="82"  y="34" width="11" height="6" rx="1"/>
+  </g>
+  <rect x="0" y="0" width="82" height="44" rx="2" fill="#1c1c1c" stroke="#383838" stroke-width="1"/>
+  <circle cx="5" cy="5" r="2.5" fill="#2a3a2a"/>
+  <text x="41" y="16" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#e8e8e8">LiteX UART</text>
+  <text x="41" y="27" text-anchor="middle" font-family="monospace" font-size="7" fill="#d0d8e0">0xe0001800</text>
+  <text x="41" y="38" text-anchor="middle" font-family="monospace" font-size="7" fill="#b8c0c8">U4</text>
+</g>
+<text x="537" y="149" font-family="monospace" font-size="6" fill="#dce4c0">U4</text>
+
+<!-- U5 Timer 0xe0002000 -->
+<g transform="translate(548, 218)">
+  <g fill="#d09020">
+    <rect x="-11" y="4" width="11" height="6" rx="1"/><rect x="-11" y="14" width="11" height="6" rx="1"/>
+    <rect x="-11" y="24" width="11" height="6" rx="1"/>
+    <rect x="82"  y="4" width="11" height="6" rx="1"/><rect x="82"  y="14" width="11" height="6" rx="1"/>
+    <rect x="82"  y="24" width="11" height="6" rx="1"/>
+  </g>
+  <rect x="0" y="0" width="82" height="36" rx="2" fill="#1c1c1c" stroke="#383838" stroke-width="1"/>
+  <circle cx="5" cy="5" r="2.5" fill="#2a3a2a"/>
+  <text x="41" y="14" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#e8e8e8">LiteX Timer</text>
+  <text x="41" y="24" text-anchor="middle" font-family="monospace" font-size="7" fill="#d0d8e0">0xe0002000</text>
+  <text x="41" y="33" text-anchor="middle" font-family="monospace" font-size="7" fill="#b8c0c8">U5  IRQ→11</text>
+</g>
+<text x="537" y="215" font-family="monospace" font-size="6" fill="#dce4c0">U5</text>
+
+<!-- U6 CLINT 0xe0005000 -->
+<g transform="translate(548, 278)">
+  <g fill="#d09020">
+    <rect x="-11" y="4" width="11" height="6" rx="1"/><rect x="-11" y="14" width="11" height="6" rx="1"/>
+    <rect x="-11" y="24" width="11" height="6" rx="1"/>
+    <rect x="82"  y="4" width="11" height="6" rx="1"/><rect x="82"  y="14" width="11" height="6" rx="1"/>
+    <rect x="82"  y="24" width="11" height="6" rx="1"/>
+  </g>
+  <rect x="0" y="0" width="82" height="36" rx="2" fill="#1c1c1c" stroke="#383838" stroke-width="1"/>
+  <circle cx="5" cy="5" r="2.5" fill="#2a3a2a"/>
+  <text x="41" y="14" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#e8e8e8">CLINT</text>
+  <text x="41" y="24" text-anchor="middle" font-family="monospace" font-size="7" fill="#d0d8e0">0xe0005000</text>
+  <text x="41" y="33" text-anchor="middle" font-family="monospace" font-size="7" fill="#b8c0c8">U6  IRQ→3,7</text>
+</g>
+<text x="537" y="275" font-family="monospace" font-size="6" fill="#dce4c0">U6</text>
+
+<!-- U7 GPIO_OUT 0xe0015000 -->
+<g transform="translate(548, 338)">
+  <g fill="#d09020">
+    <rect x="-11" y="4" width="11" height="6" rx="1"/><rect x="-11" y="14" width="11" height="6" rx="1"/>
+    <rect x="-11" y="24" width="11" height="6" rx="1"/>
+    <rect x="82"  y="4" width="11" height="6" rx="1"/><rect x="82"  y="14" width="11" height="6" rx="1"/>
+    <rect x="82"  y="24" width="11" height="6" rx="1"/>
+  </g>
+  <rect x="0" y="0" width="82" height="36" rx="2" fill="#1c1c1c" stroke="#383838" stroke-width="1"/>
+  <circle cx="5" cy="5" r="2.5" fill="#2a3a2a"/>
+  <text x="41" y="14" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#e8e8e8">GPIO OUT</text>
+  <text x="41" y="24" text-anchor="middle" font-family="monospace" font-size="7" fill="#d0d8e0">0xe0015000</text>
+  <text x="41" y="33" text-anchor="middle" font-family="monospace" font-size="7" fill="#b8c0c8">U7  LED0-3</text>
+</g>
+<text x="537" y="335" font-family="monospace" font-size="6" fill="#dce4c0">U7</text>
+
+<!-- U8 GPIO_IN 0xe0015400 -->
+<g transform="translate(548, 398)">
+  <g fill="#d09020">
+    <rect x="-11" y="4" width="11" height="6" rx="1"/><rect x="-11" y="14" width="11" height="6" rx="1"/>
+    <rect x="-11" y="24" width="11" height="6" rx="1"/>
+    <rect x="82"  y="4" width="11" height="6" rx="1"/><rect x="82"  y="14" width="11" height="6" rx="1"/>
+    <rect x="82"  y="24" width="11" height="6" rx="1"/>
+  </g>
+  <rect x="0" y="0" width="82" height="36" rx="2" fill="#1c1c1c" stroke="#383838" stroke-width="1"/>
+  <circle cx="5" cy="5" r="2.5" fill="#2a3a2a"/>
+  <text x="41" y="14" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#e8e8e8">GPIO IN</text>
+  <text x="41" y="24" text-anchor="middle" font-family="monospace" font-size="7" fill="#d0d8e0">0xe0015400</text>
+  <text x="41" y="33" text-anchor="middle" font-family="monospace" font-size="7" fill="#b8c0c8">U8  IRQ→12</text>
+</g>
+<text x="537" y="395" font-family="monospace" font-size="6" fill="#dce4c0">U8</text>
+
+<!-- U9 7-Seg + Buzzer ctrl (far right) -->
+<g transform="translate(700, 220)">
+  <g fill="#d09020">
+    <rect x="-11" y="4" width="11" height="6" rx="1"/><rect x="-11" y="14" width="11" height="6" rx="1"/>
+    <rect x="-11" y="24" width="11" height="6" rx="1"/>
+    <rect x="82"  y="4" width="11" height="6" rx="1"/><rect x="82"  y="14" width="11" height="6" rx="1"/>
+    <rect x="82"  y="24" width="11" height="6" rx="1"/>
+  </g>
+  <rect x="0" y="0" width="82" height="36" rx="2" fill="#1c1c1c" stroke="#383838" stroke-width="1"/>
+  <circle cx="5" cy="5" r="2.5" fill="#2a3a2a"/>
+  <text x="41" y="13" text-anchor="middle" font-family="monospace" font-size="8" fill="#e8e8e8">7-SEG CTRL</text>
+  <text x="41" y="23" text-anchor="middle" font-family="monospace" font-size="7" fill="#d0d8e0">0xe0004400</text>
+  <text x="41" y="32" text-anchor="middle" font-family="monospace" font-size="7" fill="#b8c0c8">U9  BUZZ:0xe0004000</text>
+</g>
+<text x="689" y="217" font-family="monospace" font-size="6" fill="#dce4c0">U9</text>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     CRYSTAL Y1  (between ROM/RAM and CPU)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<g transform="translate(470, 134)">
+  <rect x="0" y="0" width="44" height="22" rx="8" fill="#c8c0a0" stroke="#a8a090" stroke-width="1.5"/>
+  <rect x="4" y="4" width="36" height="14" rx="5" fill="#e0d8b0"/>
+  <rect x="-8" y="7" width="8" height="8" rx="1" fill="#d09020"/>
+  <rect x="44" y="7" width="8" height="8" rx="1" fill="#d09020"/>
+  <text x="22" y="14" text-anchor="middle" font-family="monospace" font-size="8" fill="#cccccc">100MHz</text>
+</g>
+<text x="480" y="163" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">Y1</text>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     CONNECTORS — UART J2 (top-right area)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<g transform="translate(754, 78)">
+  <rect x="0" y="0" width="20" height="100" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
+  <g fill="#d09020">
+    <rect x="4" y="4"  width="12" height="10" rx="1"/>
+    <rect x="4" y="18" width="12" height="10" rx="1"/>
+    <rect x="4" y="32" width="12" height="10" rx="1"/>
+    <rect x="4" y="46" width="12" height="10" rx="1"/>
+    <rect x="4" y="60" width="12" height="10" rx="1"/>
+    <rect x="4" y="74" width="12" height="10" rx="1"/>
+  </g>
+  <!-- Pin labels -->
+  <text x="24" y="12"  font-family="monospace" font-size="6" fill="#dce4c0">GND</text>
+  <text x="24" y="26"  font-family="monospace" font-size="6" fill="#dce4c0">VCC</text>
+  <text x="24" y="40"  font-family="monospace" font-size="6" fill="#dce4c0">TX</text>
+  <text x="24" y="54"  font-family="monospace" font-size="6" fill="#dce4c0">RX</text>
+  <text x="24" y="68"  font-family="monospace" font-size="6" fill="#dce4c0">RTS</text>
+  <text x="24" y="82"  font-family="monospace" font-size="6" fill="#dce4c0">CTS</text>
+</g>
+<text x="764" y="75" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">J2 UART</text>
+
+<!-- GDB/Debug Header J3 -->
+<g transform="translate(840, 78)">
+  <rect x="0" y="0" width="20" height="68" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
+  <g fill="#d09020">
+    <rect x="4" y="4"  width="12" height="10" rx="1"/>
+    <rect x="4" y="18" width="12" height="10" rx="1"/>
+    <rect x="4" y="32" width="12" height="10" rx="1"/>
+    <rect x="4" y="46" width="12" height="10" rx="1"/>
+  </g>
+  <text x="24" y="12"  font-family="monospace" font-size="6" fill="#dce4c0">VCC</text>
+  <text x="24" y="26"  font-family="monospace" font-size="6" fill="#dce4c0">GND</text>
+  <text x="24" y="40"  font-family="monospace" font-size="6" fill="#dce4c0">SWDIO</text>
+  <text x="24" y="54"  font-family="monospace" font-size="6" fill="#dce4c0">SWCLK</text>
+</g>
+<text x="850" y="75" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">J3 DBG</text>
+
+<!-- GPIO Header J4 (right edge, 8-pin) -->
+<g transform="translate(900, 270)">
+  <rect x="0" y="0" width="20" height="134" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
+  <g fill="#d09020">
+    <rect x="4" y="4"  width="12" height="10" rx="1"/>
+    <rect x="4" y="18" width="12" height="10" rx="1"/>
+    <rect x="4" y="32" width="12" height="10" rx="1"/>
+    <rect x="4" y="46" width="12" height="10" rx="1"/>
+    <rect x="4" y="60" width="12" height="10" rx="1"/>
+    <rect x="4" y="74" width="12" height="10" rx="1"/>
+    <rect x="4" y="88" width="12" height="10" rx="1"/>
+    <rect x="4" y="102" width="12" height="10" rx="1"/>
+  </g>
+  <!-- labels on left side of header -->
+  <text x="-2" y="12"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">GP0</text>
+  <text x="-2" y="26"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">GP1</text>
+  <text x="-2" y="40"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">GP2</text>
+  <text x="-2" y="54"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">GP3</text>
+  <text x="-2" y="68"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">SDA</text>
+  <text x="-2" y="82"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">SCL</text>
+  <text x="-2" y="96"  text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">GND</text>
+  <text x="-2" y="110" text-anchor="end" font-family="monospace" font-size="5.5" fill="#dce4c0">VCC</text>
+</g>
+<text x="893" y="267" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">J4</text>
+<text x="893" y="276" text-anchor="middle" font-family="monospace" font-size="5.5" fill="#b0c090">GPIO</text>
+
+<!-- I2C Header J5 (left side) -->
+<g transform="translate(30, 440)">
+  <rect x="0" y="0" width="20" height="68" rx="2" fill="#2a2a60" stroke="#5050a0" stroke-width="1"/>
+  <g fill="#d09020">
+    <rect x="4" y="4"  width="12" height="10" rx="1"/>
+    <rect x="4" y="18" width="12" height="10" rx="1"/>
+    <rect x="4" y="32" width="12" height="10" rx="1"/>
+    <rect x="4" y="46" width="12" height="10" rx="1"/>
+  </g>
+  <text x="24" y="12"  font-family="monospace" font-size="6" fill="#dce4c0">VCC</text>
+  <text x="24" y="26"  font-family="monospace" font-size="6" fill="#dce4c0">GND</text>
+  <text x="24" y="40"  font-family="monospace" font-size="6" fill="#dce4c0">SDA</text>
+  <text x="24" y="54"  font-family="monospace" font-size="6" fill="#dce4c0">SCL</text>
+</g>
+<text x="40" y="437" text-anchor="middle" font-family="monospace" font-size="6.5" fill="#dce4c0">J5 I2C</text>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     7-SEGMENT DISPLAY (virtual, silkscreened footprint)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<g transform="translate(700, 156)">
+  <rect x="0" y="0" width="82" height="50" rx="3" fill="#111" stroke="#dce4c0" stroke-width="0.8" stroke-dasharray="2,2"/>
+  <!-- 7 segments -->
+  <!-- top -->   <rect x="20" y="4"  width="42" height="6" rx="2" fill="#1a0000"/>
+  <!-- top-L -->  <rect x="14" y="10" width="6"  height="16" rx="2" fill="#cc2200" opacity="0.85"/>
+  <!-- top-R -->  <rect x="62" y="10" width="6"  height="16" rx="2" fill="#cc2200" opacity="0.85"/>
+  <!-- mid -->   <rect x="20" y="22" width="42" height="6" rx="2" fill="#1a0000"/>
+  <!-- bot-L -->  <rect x="14" y="28" width="6"  height="16" rx="2" fill="#1a0000"/>
+  <!-- bot-R -->  <rect x="62" y="28" width="6"  height="16" rx="2" fill="#cc2200" opacity="0.85"/>
+  <!-- bot -->   <rect x="20" y="42" width="42" height="6" rx="2" fill="#1a0000"/>
+  <text x="41" y="66" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">7-SEG</text>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     BUZZER BZ1
+     ═══════════════════════════════════════════════════════════════════════ -->
+<circle cx="820" cy="460" r="22" fill="#1c1c1c" stroke="#444" stroke-width="1.5"/>
+<circle cx="820" cy="460" r="16" fill="#111"/>
+<circle cx="820" cy="460" r="5"  fill="#333" stroke="#555" stroke-width="0.8"/>
+<circle cx="820" cy="455" r="1.5" fill="#e8e8e8"/>
+<!-- buzzer pins -->
+<rect x="813" y="481" width="5" height="10" rx="1" fill="#d09020"/>
+<rect x="822" y="481" width="5" height="10" rx="1" fill="#d09020"/>
+<text x="820" y="502" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">BZ1</text>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     LEDs D1–D4 (bottom right)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<!-- Silkscreen LED zone -->
+<rect x="618" y="538" width="168" height="60" rx="3" fill="none" stroke="#dce4c0" stroke-width="0.7" stroke-dasharray="3,2"/>
+<text x="702" y="535" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">GPIO OUTPUT LEDS</text>
+
+<!-- D1 RED -->
+<g transform="translate(632,542)">
+  <rect x="-4" y="24" width="4" height="8" fill="#d09020"/>
+  <rect x="6"  y="24" width="4" height="8" fill="#d09020"/>
+  <ellipse cx="3" cy="18" rx="10" ry="10" fill="#dd1010" opacity="0.92" filter="url(#ledshadow)"/>
+  <ellipse cx="0" cy="15" rx="4" ry="3.5" fill="#ff6060" opacity="0.6"/>
+  <!-- resistor -->
+  <rect x="-3" y="35" width="12" height="6" rx="1" fill="#1c1c1c" stroke="#555" stroke-width="0.7"/>
+  <text x="3" y="52" text-anchor="middle" font-family="monospace" font-size="5.5" fill="#dce4c0">LED0</text>
+  <text x="3" y="60" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">D1</text>
+</g>
+
+<!-- D2 YELLOW -->
+<g transform="translate(674,542)">
+  <rect x="-4" y="24" width="4" height="8" fill="#d09020"/>
+  <rect x="6"  y="24" width="4" height="8" fill="#d09020"/>
+  <ellipse cx="3" cy="18" rx="10" ry="10" fill="#ddb010" opacity="0.92" filter="url(#ledshadow)"/>
+  <ellipse cx="0" cy="15" rx="4" ry="3.5" fill="#ffe060" opacity="0.6"/>
+  <rect x="-3" y="35" width="12" height="6" rx="1" fill="#1c1c1c" stroke="#555" stroke-width="0.7"/>
+  <text x="3" y="52" text-anchor="middle" font-family="monospace" font-size="5.5" fill="#dce4c0">LED1</text>
+  <text x="3" y="60" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">D2</text>
+</g>
+
+<!-- D3 GREEN -->
+<g transform="translate(716,542)">
+  <rect x="-4" y="24" width="4" height="8" fill="#d09020"/>
+  <rect x="6"  y="24" width="4" height="8" fill="#d09020"/>
+  <ellipse cx="3" cy="18" rx="10" ry="10" fill="#10cc30" opacity="0.92" filter="url(#ledshadow)"/>
+  <ellipse cx="0" cy="15" rx="4" ry="3.5" fill="#60ff80" opacity="0.6"/>
+  <rect x="-3" y="35" width="12" height="6" rx="1" fill="#1c1c1c" stroke="#555" stroke-width="0.7"/>
+  <text x="3" y="52" text-anchor="middle" font-family="monospace" font-size="5.5" fill="#dce4c0">LED2</text>
+  <text x="3" y="60" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">D3</text>
+</g>
+
+<!-- D4 BLUE -->
+<g transform="translate(758,542)">
+  <rect x="-4" y="24" width="4" height="8" fill="#d09020"/>
+  <rect x="6"  y="24" width="4" height="8" fill="#d09020"/>
+  <ellipse cx="3" cy="18" rx="10" ry="10" fill="#2030dd" opacity="0.92" filter="url(#ledshadow)"/>
+  <ellipse cx="0" cy="15" rx="4" ry="3.5" fill="#6080ff" opacity="0.6"/>
+  <rect x="-3" y="35" width="12" height="6" rx="1" fill="#1c1c1c" stroke="#555" stroke-width="0.7"/>
+  <text x="3" y="52" text-anchor="middle" font-family="monospace" font-size="5.5" fill="#dce4c0">LED3</text>
+  <text x="3" y="60" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">D4</text>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PUSH BUTTONS BTN0, BTN1
+     ═══════════════════════════════════════════════════════════════════════ -->
+<rect x="248" y="538" width="168" height="60" rx="3" fill="none" stroke="#dce4c0" stroke-width="0.7" stroke-dasharray="3,2"/>
+<text x="332" y="535" text-anchor="middle" font-family="monospace" font-size="7" fill="#dce4c0">GPIO INPUT</text>
+
+<!-- BTN0 -->
+<g transform="translate(262,548)">
+  <rect x="-3" y="-3" width="26" height="26" rx="2" fill="#2a2a2a" stroke="#555" stroke-width="1"/>
+  <!-- 4 corner pads -->
+  <rect x="-3" y="-3" width="7"  height="7"  rx="1" fill="#d09020"/>
+  <rect x="16" y="-3" width="7"  height="7"  rx="1" fill="#d09020"/>
+  <rect x="-3" y="16" width="7"  height="7"  rx="1" fill="#d09020"/>
+  <rect x="16" y="16" width="7"  height="7"  rx="1" fill="#d09020"/>
+  <!-- button dome -->
+  <circle cx="10" cy="10" r="8" fill="#404040" stroke="#666" stroke-width="1"/>
+  <circle cx="10" cy="10" r="5" fill="#b8c0c8"/>
+  <circle cx="8"  cy="8"  r="1.5" fill="#cccccc"/>
+  <text x="10" y="37" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">BTN0</text>
+  <text x="10" y="46" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">SW1</text>
+</g>
+
+<!-- BTN1 -->
+<g transform="translate(338,548)">
+  <rect x="-3" y="-3" width="26" height="26" rx="2" fill="#2a2a2a" stroke="#555" stroke-width="1"/>
+  <rect x="-3" y="-3" width="7"  height="7"  rx="1" fill="#d09020"/>
+  <rect x="16" y="-3" width="7"  height="7"  rx="1" fill="#d09020"/>
+  <rect x="-3" y="16" width="7"  height="7"  rx="1" fill="#d09020"/>
+  <rect x="16" y="16" width="7"  height="7"  rx="1" fill="#d09020"/>
+  <circle cx="10" cy="10" r="8" fill="#404040" stroke="#666" stroke-width="1"/>
+  <circle cx="10" cy="10" r="5" fill="#b8c0c8"/>
+  <circle cx="8"  cy="8"  r="1.5" fill="#cccccc"/>
+  <text x="10" y="37" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">BTN1</text>
+  <text x="10" y="46" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">SW2</text>
+</g>
+
+<!-- DIP Switch SW3 (4-position) -->
+<g transform="translate(398,544)">
+  <rect x="0" y="0" width="60" height="32" rx="2" fill="#1a1a50" stroke="#3030a0" stroke-width="1"/>
+  <!-- 4 rocker switches -->
+  <g fill="#c8c8c8" stroke="#888" stroke-width="0.5">
+    <rect x="4"  y="4" width="10" height="24" rx="1"/>
+    <rect x="18" y="4" width="10" height="24" rx="1"/>
+    <rect x="32" y="4" width="10" height="24" rx="1"/>
+    <rect x="46" y="4" width="10" height="24" rx="1"/>
+  </g>
+  <!-- "ON" markers on top half, switch 1 and 3 are ON -->
+  <rect x="4"  y="4"  width="10" height="12" rx="1" fill="#e0e0e0"/>
+  <rect x="32" y="4"  width="10" height="12" rx="1" fill="#e0e0e0"/>
+  <text x="9"  y="43" text-anchor="middle" font-family="monospace" font-size="5" fill="#dce4c0">1</text>
+  <text x="23" y="43" text-anchor="middle" font-family="monospace" font-size="5" fill="#dce4c0">2</text>
+  <text x="37" y="43" text-anchor="middle" font-family="monospace" font-size="5" fill="#dce4c0">3</text>
+  <text x="51" y="43" text-anchor="middle" font-family="monospace" font-size="5" fill="#dce4c0">4</text>
+  <text x="30" y="55" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">DIP_SW</text>
+  <text x="30" y="63" text-anchor="middle" font-family="monospace" font-size="5" fill="#b0c090">SW3</text>
+  <!-- pin pads -->
+  <g fill="#d09020">
+    <rect x="4"  y="-8" width="10" height="6" rx="1"/>
+    <rect x="18" y="-8" width="10" height="6" rx="1"/>
+    <rect x="32" y="-8" width="10" height="6" rx="1"/>
+    <rect x="46" y="-8" width="10" height="6" rx="1"/>
+    <rect x="4"  y="34" width="10" height="6" rx="1"/>
+    <rect x="18" y="34" width="10" height="6" rx="1"/>
+    <rect x="32" y="34" width="10" height="6" rx="1"/>
+    <rect x="46" y="34" width="10" height="6" rx="1"/>
+  </g>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     COPPER TRACES  — main signal routing
+     ═══════════════════════════════════════════════════════════════════════ -->
+<g stroke="#c8820c" fill="none" stroke-linecap="round" stroke-linejoin="round">
+
+  <!-- Power bus: left rail to CPU left side -->
+  <polyline points="72,185 72,90 305,90 305,290" stroke-width="2.5" opacity="0.6"/>
+
+  <!-- CPU top ↔ ROM (address/data bus bundle) -->
+  <polyline points="355,248 355,220 195,220 195,212" stroke-width="1.5"/>
+  <polyline points="372,248 372,216 200,216 200,212" stroke-width="1.5"/>
+  <polyline points="389,248 389,212 205,212 205,212" stroke-width="1.5"/>
+
+  <!-- CPU top ↔ RAM -->
+  <polyline points="406,248 406,200 370,200 370,200" stroke-width="1.5"/>
+  <polyline points="423,248 423,196 375,196 375,200" stroke-width="1.5"/>
+  <polyline points="440,248 440,192 380,192 380,200" stroke-width="1.5"/>
+
+  <!-- Crystal to CPU -->
+  <polyline points="492,156 492,200 480,200 480,248" stroke-width="1.2"/>
+  <polyline points="514,156 514,210 466,210 466,248" stroke-width="1.2"/>
+
+  <!-- CPU right ↔ UART (U4) -->
+  <polyline points="501,265 530,265 530,172 548,172" stroke-width="1.5"/>
+  <polyline points="501,282 525,282 525,180 548,180" stroke-width="1.5"/>
+
+  <!-- CPU right ↔ Timer (U5) -->
+  <polyline points="501,307 535,307 535,240 548,240" stroke-width="1.5"/>
+
+  <!-- CPU right ↔ CLINT (U6) -->
+  <polyline points="501,332 540,332 540,296 548,296" stroke-width="1.5"/>
+
+  <!-- CPU right ↔ GPIO_OUT (U7) -->
+  <polyline points="501,358 535,358 535,356 548,356" stroke-width="1.5"/>
+
+  <!-- CPU right ↔ GPIO_IN (U8) -->
+  <polyline points="501,375 535,375 535,416 548,416" stroke-width="1.5"/>
+
+  <!-- GPIO_OUT ↔ LEDs (4 traces going down) -->
+  <polyline points="630,434 630,540" stroke-width="1.5"/>
+  <polyline points="643,434 643,558 650,558 650,540" stroke-width="1.5"/>
+  <polyline points="549,434 549,470 686,470 686,540" stroke-width="1.5"/>
+  <polyline points="560,434 560,480 728,480 728,540" stroke-width="1.5"/>
+
+  <!-- GPIO_IN ↔ Buttons and DIP -->
+  <polyline points="548,406 520,406 520,490 272,490 272,544" stroke-width="1.5"/>
+  <polyline points="548,416 515,416 515,496 348,496 348,544" stroke-width="1.5"/>
+  <polyline points="548,426 510,426 510,502 413,502 413,536" stroke-width="1.5"/>
+
+  <!-- UART chip ↔ UART header -->
+  <polyline points="630,166 718,166 718,102 754,102" stroke-width="1.5"/>
+  <polyline points="630,174 724,174 724,116 754,116" stroke-width="1.5"/>
+
+  <!-- 7-Seg ↔ U9 ctrl: separate trace from CPU -->
+  <polyline points="501,341 545,341 545,238 700,238" stroke-width="1.2"/>
+
+  <!-- Buzzer from GPIO_OUT area -->
+  <polyline points="630,426 680,426 680,490 820,490 820,482" stroke-width="1.2"/>
+
+  <!-- I2C header ↔ right GPIO header (SDA/SCL) -->
+  <polyline points="50,466 140,466 140,470 900,470" stroke-width="1.2" stroke-dasharray="4,2" opacity="0.6"/>
+  <polyline points="50,480 145,480 145,476 900,476" stroke-width="1.2" stroke-dasharray="4,2" opacity="0.6"/>
+
+  <!-- Debug header traces to CPU (simplified) -->
+  <polyline points="840,110 840,200 835,200 835,248 474,248" stroke-width="1.2"/>
+
+</g>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     VIAS — scattered at trace junctions
+     ═══════════════════════════════════════════════════════════════════════ -->
+<g stroke="none">
+  <!-- via = copper annular ring with drilled hole -->
+  <circle cx="530" cy="265" r="5" fill="#c8820c"/><circle cx="530" cy="265" r="2.5" fill="#0f3d14"/>
+  <circle cx="535" cy="307" r="5" fill="#c8820c"/><circle cx="535" cy="307" r="2.5" fill="#0f3d14"/>
+  <circle cx="540" cy="332" r="5" fill="#c8820c"/><circle cx="540" cy="332" r="2.5" fill="#0f3d14"/>
+  <circle cx="630" cy="434" r="5" fill="#c8820c"/><circle cx="630" cy="434" r="2.5" fill="#0f3d14"/>
+  <circle cx="355" cy="220" r="4" fill="#c8820c"/><circle cx="355" cy="220" r="2" fill="#0f3d14"/>
+  <circle cx="406" cy="200" r="4" fill="#c8820c"/><circle cx="406" cy="200" r="2" fill="#0f3d14"/>
+  <circle cx="520" cy="490" r="4" fill="#c8820c"/><circle cx="520" cy="490" r="2" fill="#0f3d14"/>
+  <circle cx="718" cy="166" r="4" fill="#c8820c"/><circle cx="718" cy="166" r="2" fill="#0f3d14"/>
+  <circle cx="680" cy="490" r="4" fill="#c8820c"/><circle cx="680" cy="490" r="2" fill="#0f3d14"/>
+  <circle cx="305" cy="290" r="5" fill="#c8820c"/><circle cx="305" cy="290" r="2.5" fill="#0f3d14"/>
+  <circle cx="140" cy="466" r="4" fill="#c8820c"/><circle cx="140" cy="466" r="2" fill="#0f3d14"/>
+  <circle cx="492" cy="200" r="4" fill="#c8820c"/><circle cx="492" cy="200" r="2" fill="#0f3d14"/>
+  <circle cx="835" cy="200" r="4" fill="#c8820c"/><circle cx="835" cy="200" r="2" fill="#0f3d14"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     ADDITIONAL SILKSCREEN LABELS & ANNOTATIONS
+     ═══════════════════════════════════════════════════════════════════════ -->
+<!-- Memory address annotations on traces -->
+<text x="220" y="218" font-family="monospace" font-size="5" fill="#a0c888">A[17:0]/D[31:0]</text>
+<text x="370" y="198" font-family="monospace" font-size="5" fill="#a0c888">D[31:0]</text>
+<text x="506" y="258" font-family="monospace" font-size="5" fill="#a0c888">SYSBUS</text>
+<text x="636" y="468" font-family="monospace" font-size="5" fill="#a0c888">GPIO[3:0]</text>
+<text x="516" y="484" font-family="monospace" font-size="5" fill="#a0c888">BTN/DIP[3:0]</text>
+<text x="660" y="162" font-family="monospace" font-size="5" fill="#a0c888">TX/RX</text>
+
+<!-- IRQ labels near peripheral chips -->
+<text x="642" y="246" font-family="monospace" font-size="5.5" fill="#c8a060">→IRQ11</text>
+<text x="642" y="296" font-family="monospace" font-size="5.5" fill="#c8a060">→IRQ3,7</text>
+<text x="642" y="381" font-family="monospace" font-size="5.5" fill="#c8a060">→IRQ12</text>
+
+<!-- GND marker -->
+<text x="840" y="210" font-family="monospace" font-size="5.5" fill="#c8a060">JTAG/GDB</text>
+
+<!-- Board version box (lower-right) -->
+<rect x="830" y="610" width="86" height="26" rx="3" fill="none" stroke="#dce4c0" stroke-width="0.7"/>
+<text x="873" y="621" text-anchor="middle" font-family="monospace" font-size="6" fill="#dce4c0">CS281 BOARD</text>
+<text x="873" y="631" text-anchor="middle" font-family="monospace" font-size="5.5" fill="#b0c090">REV 1.0  2024</text>
+
+</svg>

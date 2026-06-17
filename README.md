@@ -68,6 +68,8 @@ The CS281 board is a custom virtual platform defined in [`hardware/cs281_board.r
 | GPIO Output (LEDs) | `0xe0015000` | — |
 | GPIO Input (BTN/DIP) | `0xe0015400` | — |
 
+![CS281 Board Rendering](hardware/docs/cs281_board.svg)
+
 → See [`hardware/cs281_board.repl`](hardware/cs281_board.repl) for the full Renode platform definition and [`hardware/docs/CS281_TRM.pdf`](hardware/docs/CS281_TRM.pdf) for complete register documentation.
 
 ## Prerequisites
