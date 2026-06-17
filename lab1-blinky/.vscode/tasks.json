@@ -1,0 +1,126 @@
+{
+    // VS Code Tasks for CS281 Lab 1
+    // Access via  Terminal → Run Task…  or the keyboard shortcuts below.
+    "version": "2.0.0",
+    "tasks": [
+
+        // ── Build ──────────────────────────────────────────────────────────
+        {
+            "label": "Build",
+            "detail": "Assemble and link → build/lab1.elf",
+            "type": "shell",
+            "command": "make",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+
+        // ── Clean ──────────────────────────────────────────────────────────
+        {
+            "label": "Clean",
+            "detail": "Remove build/ directory",
+            "type": "shell",
+            "command": "make clean",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+
+        // ── Run in Renode ─────────────────────────────────────────────────
+        // Builds first, then starts Renode headless in this terminal.
+        // UART output appears on  telnet localhost 3456  in a second terminal.
+        {
+            "label": "Run in Renode",
+            "detail": "Build then run headless in Renode (monitor in terminal)",
+            "type": "shell",
+            "command": "make run",
+            "dependsOn": ["Build"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+
+        // ── Start Renode Debug Session ────────────────────────────────────
+        // Used as the preLaunchTask for the debugger launch config.
+        // Starts Renode with GDB stub on port 3333; CPU halted until GDB connects.
+        {
+            "label": "Start Renode Debug",
+            "detail": "Build then start Renode with GDB stub on port 3333 (CPU halted)",
+            "type": "shell",
+            "command": "make run-debug",
+            "dependsOn": ["Build"],
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^NEVER_MATCHES$",
+                    "message": 1
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Starting Renode debug session",
+                    "endsPattern":   "CPU is HALTED"
+                }
+            }
+        },
+
+        // ── UART Terminal ─────────────────────────────────────────────────
+        // Run this while Renode is active to see UART output.
+        {
+            "label": "UART Terminal",
+            "detail": "Connect to UART on telnet port 3456  (Ctrl-] then quit to exit)",
+            "type": "shell",
+            "command": "telnet localhost 3456",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": []
+        },
+
+
+        // ── Renode Monitor ────────────────────────────────────────────────
+        // Connects to the Renode monitor telnet port while Renode is running.
+        // Useful for inspecting state, toggling GPIO inputs, single-stepping.
+        {
+            "label": "Renode Monitor",
+            "detail": "Connect to Renode monitor on telnet port 1234",
+            "type": "shell",
+            "command": "make monitor-connect",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+            "problemMatcher": []
+        },
+
+        // ── Disassemble ───────────────────────────────────────────────────
+        {
+            "label": "Disassemble",
+            "detail": "Print disassembly of build/lab1.elf to terminal",
+            "type": "shell",
+            "command": "make disasm",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,48 @@
+# =============================================================================
+# CS281 Virtual Development Board — Renode Debug Script
+#
+# Starts Renode with a GDB stub so VS Code (cortex-debug) or a command-line
+# GDB session can connect and control execution.
+#
+# The caller must set $bin before including this script, e.g.:
+#
+#   renode --plain --disable-xwt \
+#     -e "$bin=@/abs/path/to/lab1.elf; i @/abs/path/to/cs281_debug.resc"
+#
+# Ports opened by this script
+#   GDB stub       →  localhost:3333   (VS Code launch.json / make debug-attach)
+#   UART terminal  →  telnet localhost 3456   (make uart-connect)
+#   Renode monitor →  stdin/stdout of the terminal where Renode launched
+#
+# Workflow
+#   1. Run:  make run-debug          (Renode starts, halted, waiting for GDB)
+#   2. Either:
+#        a. Launch the "Debug on Renode" config in VS Code  (F5), or
+#        b. Run:  make debug-attach              (command-line GDB)
+#   3. GDB/VS Code controls execution from here (step, continue, breakpoints…)
+# =============================================================================
+
+# ── Machine Setup ─────────────────────────────────────────────────────────────
+mach create "CS281_Board"
+machine LoadPlatformDescription $platform
+
+# ── UART → Telnet Server ──────────────────────────────────────────────────────
+emulation CreateServerSocketTerminal 3456 "uart_term" false
+connector Connect uart uart_term
+
+# ── Load Program ──────────────────────────────────────────────────────────────
+sysbus LoadELF $bin
+
+# ── GDB Server ────────────────────────────────────────────────────────────────
+# Start GDB stub on port 3333.  CPU is halted; GDB must send 'continue'.
+# The 'true' argument keeps the CPU halted until GDB connects.
+machine StartGdbServer 3333 true
+
+echo ""
+echo "╔══════════════════════════════════════════════════╗"
+echo "║  CS281 Debug Session Ready                       ║"
+echo "║  GDB stub  →  localhost:3333                     ║"
+echo "║  UART      →  telnet localhost 3456              ║"
+echo "║  CPU is HALTED — connect GDB or press F5 in VS Code ║"
+echo "╚══════════════════════════════════════════════════╝"
+echo ""

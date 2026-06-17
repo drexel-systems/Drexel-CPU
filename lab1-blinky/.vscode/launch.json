@@ -1,0 +1,49 @@
+{
+    // VS Code Debugger Launch Configurations for CS281 Lab 1
+    //
+    // Requires: cortex-debug extension (marus25.cortex-debug)
+    //           riscv32-unknown-elf-gdb in your PATH
+    //
+    // Workflow
+    //   1. Run "Start Renode Debug" task (or: make run-debug in a terminal)
+    //      Renode starts headless with GDB stub on port 3333, CPU halted.
+    //   2. Press F5 (or Run → Start Debugging) to connect and begin debugging.
+    //
+    // In the debug session you can
+    //   • Set breakpoints in main.S by clicking the gutter
+    //   • Step (F10), Step Into (F11), Continue (F5)
+    //   • Inspect registers in the "Cortex Registers" panel
+    //   • Watch memory in the Debug Console:  -exec x/4x 0xe0015000
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug on Renode",
+            "type": "cortex-debug",
+            "request": "launch",
+
+            // "external" = we manage the GDB server ourselves (Renode)
+            "servertype": "external",
+            "gdbTarget": "localhost:3333",
+
+            "executable": "${workspaceFolder}/build/lab1.elf",
+            "toolchainPrefix": "riscv32-unknown-elf",
+
+            // Stop at the entry point so you can step through startup.S
+            "runToEntryPoint": "main",
+
+            // Start Renode before attaching GDB
+            "preLaunchTask": "Start Renode Debug",
+
+            // Show GDB output for troubleshooting
+            "showDevDebugOutput": "parsed",
+
+            // Override default ARM SVD — not needed for RISC-V
+            "svdFile": "",
+
+            // Additional GDB commands sent at session start
+            "postLaunchCommands": [
+                "set architecture riscv:rv32"
+            ]
+        }
+    ]
+}

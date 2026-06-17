@@ -1,0 +1,27 @@
+{
+    // IntelliSense configuration for C programs on the CS281 board.
+    // Ensures headers in hardware/lib/ are found and the right compiler is used.
+    "configurations": [
+        {
+            "name": "CS281 RISC-V Bare-Metal",
+            "includePath": [
+                "${workspaceFolder}",
+                "${workspaceFolder}/../hardware/lib"
+            ],
+            "defines": [
+                "__riscv",
+                "__riscv_xlen=32"
+            ],
+            "compilerPath": "riscv32-unknown-elf-gcc",
+            "compilerArgs": [
+                "-march=rv32im",
+                "-mabi=ilp32",
+                "-nostdlib"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}

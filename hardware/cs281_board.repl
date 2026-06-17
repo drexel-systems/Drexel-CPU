@@ -1,0 +1,110 @@
+// ============================================================================
+// CS281 Virtual Development Board  —  Renode Platform Description
+// RISC-V RV32IM Educational Platform
+//
+// Memory Map
+// ──────────────────────────────────────────────────────────────────────────
+//   0x20000000  ROM / Flash   256 KB   code + rodata (read-only at runtime)
+//   0x40000000  RAM           512 KB   .data, .bss, heap, stack
+//
+//   0xe0001800  UART                   LiteX UART (serial console)
+//   0xe0002000  Timer                  LiteX Timer (IRQ → cpu line 11)
+//   0xe0004000  Buzzer                 LiteX_GPIO Out, pin 0 = on/off
+//   0xe0004400  7-Segment Display      LiteX_GPIO Out, bits 0-7 = seg a-g + dp
+//   0xe0005000  CLINT                  Machine timer + software IRQs
+//   0xe0015000  GPIO Output            bits 0-3 → LED0-LED3
+//   0xe0015400  GPIO Input             bit 0=BTN0, 1=BTN1, 2=DIP_SW0, 3=DIP_SW1
+//
+// Interrupts
+// ──────────────────────────────────────────────────────────────────────────
+//   cpu line  3  — CLINT software interrupt (msip)
+//   cpu line  7  — CLINT machine timer interrupt (mtip)
+//   cpu line 11  — LiteX Timer
+//   cpu line 12  — GPIO Input (state change)
+//
+// GPIO Input (driven via Renode monitor)
+//   gpio_in SetGPIO <pin> true/false
+//     pin 0 = BTN0, pin 1 = BTN1, pin 2 = DIP_SW0, pin 3 = DIP_SW1
+//
+// 7-Segment Bitmask (write to 0xe0004400)
+//   bit 0 = seg_a (top)          bit 4 = seg_e (bottom-left)
+//   bit 1 = seg_b (top-right)    bit 5 = seg_f (top-left)
+//   bit 2 = seg_c (bottom-right) bit 6 = seg_g (middle)
+//   bit 3 = seg_d (bottom)       bit 7 = seg_dp (decimal point)
+//   Examples:  0x3F = '0'  (a+b+c+d+e+f)
+//              0x06 = '1'  (b+c)
+//              0x5B = '2'  (a+b+d+e+g)
+// ============================================================================
+
+// ── CPU ─────────────────────────────────────────────────────────────────────
+cpu: CPU.RiscV32 @ sysbus
+    cpuType: "rv32im_zicsr"
+    privilegedArchitecture: PrivilegedArchitecture.Priv1_11
+    hartId: 0
+    timeProvider: clint
+
+// ── Memory ──────────────────────────────────────────────────────────────────
+
+// ROM — holds startup code + application + read-only data
+// Loaded from ELF; treated as read-only by the linker script.
+rom: Memory.MappedMemory @ sysbus 0x20000000
+    size: 0x40000       // 256 KB
+
+// RAM — data segment, BSS, heap, and stack
+ram: Memory.MappedMemory @ sysbus 0x40000000
+    size: 0x80000       // 512 KB
+
+// ── Serial Console ───────────────────────────────────────────────────────────
+uart: UART.LiteX_UART @ sysbus 0xe0001800
+
+// ── Hardware Timer (IRQ → cpu line 11) ──────────────────────────────────────
+timer: Timers.LiteX_Timer @ sysbus 0xe0002000
+    frequency: 100000000
+    -> cpu @ 11
+
+// ── CLINT — machine-level software + timer interrupts ────────────────────────
+clint: IRQControllers.CoreLevelInterruptor @ sysbus 0xe0005000
+    [0, 1] -> cpu @ [3, 7]
+    frequency: 100000000
+
+// ── Output Peripherals ───────────────────────────────────────────────────────
+
+// Buzzer — single-bit GPIO output
+//   Write 0x1 to 0xe0004000 to activate; 0x0 to deactivate.
+buzzer_gpio: GPIOPort.LiteX_GPIO @ sysbus 0xe0004000
+    type: Type.Out
+
+buzzer: Miscellaneous.LED @ buzzer_gpio 0
+
+// 7-Segment Display — 8-bit GPIO output
+//   Each bit drives one segment: a=0, b=1, c=2, d=3, e=4, f=5, g=6, dp=7
+seg_gpio: GPIOPort.LiteX_GPIO @ sysbus 0xe0004400
+    type: Type.Out
+
+seg_a:  Miscellaneous.LED @ seg_gpio 0
+seg_b:  Miscellaneous.LED @ seg_gpio 1
+seg_c:  Miscellaneous.LED @ seg_gpio 2
+seg_d:  Miscellaneous.LED @ seg_gpio 3
+seg_e:  Miscellaneous.LED @ seg_gpio 4
+seg_f:  Miscellaneous.LED @ seg_gpio 5
+seg_g:  Miscellaneous.LED @ seg_gpio 6
+seg_dp: Miscellaneous.LED @ seg_gpio 7
+
+// ── GPIO Peripherals ─────────────────────────────────────────────────────────
+
+// GPIO Output — drives 4 board LEDs
+//   Write bitmask: bit 0=LED0, bit 1=LED1, bit 2=LED2, bit 3=LED3
+gpio_out: GPIOPort.LiteX_GPIO @ sysbus 0xe0015000
+    type: Type.Out
+
+gpio_led0: Miscellaneous.LED @ gpio_out 0
+gpio_led1: Miscellaneous.LED @ gpio_out 1
+gpio_led2: Miscellaneous.LED @ gpio_out 2
+gpio_led3: Miscellaneous.LED @ gpio_out 3
+
+// GPIO Input — reads 4 board inputs (buttons + DIP switches)
+//   Drive via monitor:  gpio_in SetGPIO <pin> true/false
+//   Triggers IRQ → cpu line 12 on any state change.
+gpio_in: GPIOPort.LiteX_GPIO @ sysbus 0xe0015400
+    type: Type.In
+    -> cpu @ 12

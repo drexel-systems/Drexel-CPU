@@ -1,0 +1,34 @@
+# =============================================================================
+# CS281 Virtual Development Board — Renode Run Script
+#
+# Normal (non-debug) execution.  The caller must set $bin before including
+# this script, e.g. from the Makefile:
+#
+#   renode --plain --disable-xwt \
+#     -e "$bin=@/abs/path/to/lab1.elf; i @/abs/path/to/cs281_run.resc"
+#
+# Ports opened by this script
+#   UART terminal  →  telnet localhost 3456   (run: make uart-connect)
+#   Renode monitor →  stdin/stdout of the terminal where Renode launched
+# =============================================================================
+
+# ── Machine Setup ─────────────────────────────────────────────────────────────
+mach create "CS281_Board"
+machine LoadPlatformDescription $platform
+
+# ── UART → Telnet Server ──────────────────────────────────────────────────────
+# Creates a raw TCP server on port 3456.  Connect with:
+#   telnet localhost 3456        (or: make uart-connect)
+emulation CreateServerSocketTerminal 3456 "uart_term" false
+connector Connect uart uart_term
+
+# ── Load Program ──────────────────────────────────────────────────────────────
+# $bin must be set to the path of the compiled ELF before running this script.
+# sysbus LoadELF automatically sets the CPU program counter to the ELF entry
+# point (i.e. _start in startup.S, located at the start of ROM 0x20000000).
+sysbus LoadELF $bin
+
+# ── Run ───────────────────────────────────────────────────────────────────────
+echo "CS281 Board ready.  UART on telnet port 3456."
+echo "Type 'pause' / 'start' to stop/resume.  'quit' to exit."
+start

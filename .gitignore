@@ -1,0 +1,25 @@
+# Build artifacts
+build/
+*.elf
+*.o
+*.map
+*.lst
+*.bin
+*.hex
+*.d
+
+# Renode runtime files
+*.log
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VSCode local settings (keep shared config, ignore personal overrides)
+.vscode/.browse.c_cpp.db*
+.vscode/ipch/
+
+# Python (if any scripts added later)
+__pycache__/
+*.pyc
