@@ -4,7 +4,8 @@
 
 A bare-metal RISC-V RV32IM emulated development platform for **CS281 Systems Architecture** at Drexel University. Built on [Renode](https://renode.io), it gives students a realistic hardware environment — GPIO, UART, timers, interrupts — without requiring physical hardware.
 
-📄 **[CS281 Technical Reference Manual](hardware/docs/CS281_TRM.docx)** — memory map, peripheral registers, interrupt reference, boot sequence, and register quick reference.
+📄 **[CS281 Technical Reference Manual](hardware/docs/CS281_TRM.pdf)** — memory map, peripheral registers, interrupt reference, boot sequence, and register quick reference.
+*(Also available as [CS281_TRM.docx](hardware/docs/CS281_TRM.docx) for editing.)*
 
 ---
 
