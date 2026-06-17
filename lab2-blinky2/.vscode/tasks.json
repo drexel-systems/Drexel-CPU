@@ -1,0 +1,72 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "detail": "Assemble and link → build/lab2.elf",
+            "type": "shell",
+            "command": "make",
+            "group": { "kind": "build", "isDefault": true },
+            "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "detail": "Remove build/ directory",
+            "type": "shell",
+            "command": "make clean",
+            "presentation": { "reveal": "always", "panel": "shared" },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run in Renode",
+            "detail": "Build then run headless in Renode",
+            "type": "shell",
+            "command": "make run",
+            "dependsOn": ["Build"],
+            "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Start Renode Debug",
+            "detail": "Build then start Renode with GDB stub on port 3333 (CPU halted)",
+            "type": "shell",
+            "command": "make run-debug",
+            "dependsOn": ["Build"],
+            "isBackground": true,
+            "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+            "problemMatcher": {
+                "pattern": { "regexp": "^NEVER_MATCHES$", "message": 1 },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Starting Renode debug session",
+                    "endsPattern":   "CPU is HALTED"
+                }
+            }
+        },
+        {
+            "label": "UART Terminal",
+            "detail": "Connect to UART on telnet port 3456",
+            "type": "shell",
+            "command": "telnet localhost 3456",
+            "presentation": { "reveal": "always", "panel": "dedicated" },
+            "problemMatcher": []
+        },
+        {
+            "label": "Renode Monitor",
+            "detail": "Connect to Renode monitor on telnet port 1234",
+            "type": "shell",
+            "command": "make monitor-connect",
+            "presentation": { "reveal": "always", "panel": "dedicated" },
+            "problemMatcher": []
+        },
+        {
+            "label": "Disassemble",
+            "detail": "Print disassembly of build/lab2.elf to terminal",
+            "type": "shell",
+            "command": "make disasm",
+            "presentation": { "reveal": "always", "panel": "shared" },
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug on Renode",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "external",
+            "gdbTarget": "localhost:3333",
+            "executable": "${workspaceFolder}/build/lab2.elf",
+            "toolchainPrefix": "riscv64-elf",
+            "runToEntryPoint": "main",
+            "preLaunchTask": "Start Renode Debug",
+            "showDevDebugOutput": "parsed",
+            "svdFile": "",
+            "postLaunchCommands": [
+                "set architecture riscv:rv32"
+            ]
+        }
+    ]
+}

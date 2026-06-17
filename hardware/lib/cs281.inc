@@ -78,10 +78,10 @@
 .equ CLINT_MTIMECMP,    0x4000  /* offset: timer compare (low word) */
 .equ CLINT_MTIME,       0xBFF8  /* offset: current time (low word)  */
 
-/* Absolute address of MTIME low word (CLINT_BASE + CLINT_MTIME).
- * Use this with li + lw 0(rN) — the offset 0xBFF8 is too large for
- * a 12-bit lw offset field, so we precompute the full address here. */
-.equ CLINT_MTIME_ADDR,  0xe0010FF8
+/* Absolute addresses for CLINT registers whose offsets exceed the 12-bit
+ * immediate field of lw/sw.  Use these with  li rN, ADDR / lw rD, 0(rN). */
+.equ CLINT_MTIME_ADDR,    0xe0010FF8  /* CLINT_BASE + 0xBFF8 — MTIME low word    */
+.equ CLINT_MTIMECMP_ADDR, 0xe0009000  /* CLINT_BASE + 0x4000 — MTIMECMP low word */
 
 /* CLINT tick rate — matches frequency: in cs281_board.repl (100 MHz).
  * Use these to convert wall-clock time to tick counts for delay(). */

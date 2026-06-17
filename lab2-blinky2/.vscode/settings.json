@@ -1,0 +1,29 @@
+{
+    // ── File associations ─────────────────────────────────────────────────
+    "files.associations": {
+        "*.S": "asm",       // RISC-V assembly (upper-case = preprocessed)
+        "*.s": "asm",
+        "*.inc": "asm",     // Assembly include files
+        "*.ld":  "c",       // Linker scripts get decent C highlighting
+        "*.resc": "python"  // Renode scripts (Python-like syntax)
+    },
+
+    // ── Editor ───────────────────────────────────────────────────────────
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.rulers": [80],
+    "editor.renderWhitespace": "boundary",
+
+    // ── C/C++ extension — used when writing C programs in later labs ─────
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}",
+        "${workspaceFolder}/../hardware/lib"
+    ],
+    "C_Cpp.default.defines": [],
+    "C_Cpp.default.compilerPath": "riscv32-unknown-elf-gcc",
+    "C_Cpp.default.intelliSenseMode": "gcc-arm",  // closest available
+
+    // ── Terminal ─────────────────────────────────────────────────────────
+    "terminal.integrated.defaultProfile.osx": "bash",
+    "terminal.integrated.cwd": "${workspaceFolder}"
+}
