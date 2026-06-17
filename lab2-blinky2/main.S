@@ -45,7 +45,14 @@
 /* Timer half-period in CLINT ticks (CLINT runs at 100 MHz simulated).
  * 50,000,000 ticks ON + 50,000,000 ticks OFF = 1 s per blink cycle.
  * Adjust if the blink rate looks wrong on your Renode version.            */
-.equ HALF_PERIOD,   50000000
+/* Timer half-period in CLINT ticks (CLINT runs at 100 MHz simulated).
+ * At true 100 MHz, 50,000,000 ticks = 0.5 s → 1 s per blink cycle.
+ * However, Renode with WFI fast-forwards simulation time to the next
+ * interrupt, so the emulator runs faster than wall-clock.  This value
+ * has been tuned empirically for ~1 s on a typical Mac host.
+ * If the blink rate looks wrong on your machine, adjust this constant:
+ *   too fast → increase   |   too slow → decrease                      */
+.equ HALF_PERIOD,   200000000
 
 /* mie bit 7 = MTIE (machine timer interrupt enable)                       */
 .equ MTIE_BIT,      (1 << 7)
@@ -101,15 +108,21 @@ trap_handler:
 .Lprint:
     call    uart_puts
 
-    /* ── Advance MTIMECMP by HALF_PERIOD ─────────────────────────────────── */
-    /* Read current MTIMECMP (not MTIME) and add HALF_PERIOD.  This avoids
-     * drift from interrupt latency — each deadline is exactly HALF_PERIOD
-     * after the previous one regardless of how long the handler took.      */
-    li      t0, CLINT_MTIMECMP_ADDR
-    lw      t1, 0(t0)           /* current MTIMECMP low word               */
+    /* ── Schedule next interrupt: MTIME + HALF_PERIOD ───────────────────── */
+    /* We read the CURRENT MTIME (not the old MTIMECMP) so the next deadline
+     * is always HALF_PERIOD from right now — after uart_puts has finished.
+     *
+     * Why not advance from old MTIMECMP?  uart_puts polls TXFULL for every
+     * character, which is slow enough in Renode that MTIME advances past
+     * old_MTIMECMP + HALF_PERIOD while we are still printing.  Advancing
+     * from the stale MTIMECMP would schedule a deadline already in the past,
+     * causing an immediate re-interrupt and asymmetric ON/OFF timing.      */
+    li      t0, CLINT_MTIME_ADDR
+    lw      t1, 0(t0)           /* t1 = current MTIME (single read, no loop) */
     li      t2, HALF_PERIOD
-    add     t1, t1, t2          /* next deadline                            */
-    sw      t1, 0(t0)           /* writing MTIMECMP clears the pending IRQ  */
+    add     t1, t1, t2          /* next deadline = now + HALF_PERIOD         */
+    li      t0, CLINT_MTIMECMP_ADDR
+    sw      t1, 0(t0)           /* writing MTIMECMP clears the pending IRQ   */
 
     /* ── Restore registers and return from trap ──────────────────────────── */
     lw      t2,   4(sp)

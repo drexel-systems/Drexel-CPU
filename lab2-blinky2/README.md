@@ -39,6 +39,21 @@ make uart-connect # (second terminal) watch [IRQ] LED0 ON / OFF at ~1 s interval
 
 To confirm the CPU is actually idling between interrupts, connect to the Renode monitor (`make monitor-connect`) and type `pause`. The PC will be inside the `wfi` instruction in `.Lwfi_loop` — not inside the delay countdown of Lab 1.
 
+## A Note on Simulation Timing
+
+The `HALF_PERIOD` constant in `main.S` is set to 200,000,000 CLINT ticks rather than the theoretically correct 50,000,000 (0.5 s at 100 MHz). The reason is a property of how Renode handles `wfi`.
+
+When the CPU executes `wfi`, Renode does not simulate individual clock cycles while waiting — it fast-forwards virtual time directly to the next scheduled event (the timer interrupt). This makes the simulation much more efficient than a busy-wait loop, but it also means the emulator runs faster than wall-clock time. The 50M-tick "0.5 second" deadline is reached in a fraction of a real second on the host machine.
+
+The 200M value was tuned empirically to produce approximately one blink per second on a typical Mac. If the rate looks wrong on your machine, adjust `HALF_PERIOD` in `main.S` and rebuild:
+
+```
+too fast → increase HALF_PERIOD
+too slow → decrease HALF_PERIOD
+```
+
+This same effect appeared in Lab 1's busy-wait delay, but for the opposite reason: there the CPU was executing MMIO reads in a tight loop, which slowed Renode down. Here, `wfi` speeds it up. Both cases illustrate that simulation time and wall-clock time are not the same thing — something to keep in mind any time timing behavior in the emulator differs from what you would expect on real hardware.
+
 ## What to Notice
 
 - Set a breakpoint on `trap_handler` in GDB (F5 in VS Code after `make run-debug`). Each time the timer fires the debugger will stop there. Step through the handler and observe the register save frame, the LED toggle, the MTIMECMP update, and the `mret`.
