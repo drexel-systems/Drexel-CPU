@@ -25,7 +25,12 @@ hardware/               Shared platform definition (used by every lab)
   docs/
     CS281_TRM.docx      Technical Reference Manual / datasheet
 
-lab1-blinky/            Lab 1: blink LED0 and print status over UART
+lab1-blinky/            Lab 1: blink LED0 with busy-wait delay
+  main.S
+  Makefile
+  .vscode/              Tasks, launch config, IntelliSense settings
+
+lab2-blinky2/           Lab 2: blink LED0 with timer interrupt and WFI
   main.S
   Makefile
   .vscode/              Tasks, launch config, IntelliSense settings
