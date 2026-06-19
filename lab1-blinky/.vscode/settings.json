@@ -1,9 +1,9 @@
 {
     // ── File associations ─────────────────────────────────────────────────
     "files.associations": {
-        "*.S": "asm",       // RISC-V assembly (upper-case = preprocessed)
-        "*.s": "asm",
-        "*.inc": "asm",     // Assembly include files
+        "*.S": "riscv",  // RISC-V assembly (upper-case = preprocessed)
+        "*.s": "riscv",
+        "*.inc": "riscv",     // Assembly include files
         "*.ld":  "c",       // Linker scripts get decent C highlighting
         "*.resc": "python"  // Renode scripts (Python-like syntax)
     },
@@ -25,5 +25,9 @@
 
     // ── Terminal ─────────────────────────────────────────────────────────
     "terminal.integrated.defaultProfile.osx": "bash",
-    "terminal.integrated.cwd": "${workspaceFolder}"
+    "terminal.integrated.cwd": "${workspaceFolder}",
+
+    // ── Debug ─────────────────────────────────────────────────────────────
+    // Allow gutter breakpoints in assembly (.S) files
+    "debug.allowBreakpointsEverywhere": true
 }

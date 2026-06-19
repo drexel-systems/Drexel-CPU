@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "*.S":    "riscv",
+        "*.s":    "riscv",
+        "*.inc":  "riscv",
+        "*.ld":   "c",
+        "*.resc": "python"
+    },
+    "editor.tabSize": 4,
+    "editor.rulers": [80],
+    "debug.allowBreakpointsEverywhere": true,
+    "debug.evaluateExpressionsOnHover": false,
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}",
+        "${workspaceFolder}/hardware/lib"
+    ]
+}

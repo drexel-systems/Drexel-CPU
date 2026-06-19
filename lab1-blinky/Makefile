@@ -54,6 +54,13 @@ GDB_PORT  := 3333
 RESC_RUN  := $(HARDWARE)/cs281_run.resc
 RESC_DBG  := $(HARDWARE)/cs281_debug.resc
 
+# ── OS detection (for kill-renode) ────────────────────────────────────────────
+ifeq ($(OS),Windows_NT)
+    KILL_RENODE := taskkill /F /IM renode.exe 2>nul & ping -n 2 127.0.0.1 >nul & exit /b 0
+else
+    KILL_RENODE := pkill -f renode 2>/dev/null; sleep 0.5; true
+endif
+
 # ── Default Target ────────────────────────────────────────────────────────────
 .PHONY: all
 all: $(BUILD) $(TARGET)
@@ -85,6 +92,11 @@ $(TARGET): $(OBJS)
 clean:
 	rm -rf $(BUILD)
 
+# ── Kill any running Renode (cross-platform) ──────────────────────────────────
+.PHONY: kill-renode
+kill-renode:
+	-$(KILL_RENODE)
+
 # ── Run (headless) ────────────────────────────────────────────────────────────
 # Renode runs in this terminal.  Monitor on port 1234, UART on port 3456.
 # Useful monitor commands (via make monitor-connect):
@@ -109,7 +121,7 @@ run: $(TARGET)
 #   a) Press F5 in VS Code (uses launch.json)
 #   b) Run: make debug-attach
 .PHONY: run-debug
-run-debug: $(TARGET)
+run-debug: $(TARGET) kill-renode
 	@echo "──────────────────────────────────────────────────"
 	@echo " Starting Renode debug session"
 	@echo " GDB stub  → localhost:$(GDB_PORT)"

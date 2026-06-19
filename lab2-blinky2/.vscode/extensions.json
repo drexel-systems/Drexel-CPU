@@ -12,6 +12,6 @@
         "webfreak.debug",
 
         // RISC-V assembly syntax highlighting
-        "hiro-sun.riscv-asm"
+        "zhwu95.riscv"
     ]
 }
