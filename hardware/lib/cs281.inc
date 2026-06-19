@@ -18,16 +18,31 @@
 .equ UART_EV_PENDING,   0x10
 .equ UART_EV_ENABLE,    0x14
 
-/* ── Timer  (LiteX)  ────────────────────────────────────────────────────────── */
+/* ── Timer  (LiteX_Timer — CSR data width = 8 bits)  ───────────────────────── */
+/* The LiteX_Timer peripheral uses 8-bit CSR sub-registers.  32-bit values
+ * (LOAD, RELOAD) are written as four consecutive 8-bit words, MSB first:
+ *   reg[0] = bits[31:24],  reg[1] = bits[23:16],  ... reg[3] = bits[7:0]
+ * Single-bit registers (EN, EV_PENDING, EV_ENABLE) are one word each.       */
 .equ TIMER_BASE,        0xe0002000
-.equ TIMER_LOAD,        0x00    /* offset: reload value          */
-.equ TIMER_RELOAD,      0x04    /* offset: auto-reload           */
-.equ TIMER_EN,          0x08    /* offset: 1=enable              */
-.equ TIMER_UPDATE,      0x0C    /* offset: write 1 to latch      */
-.equ TIMER_VALUE,       0x10    /* offset: current count         */
-.equ TIMER_EV_STATUS,   0x14
-.equ TIMER_EV_PENDING,  0x18
-.equ TIMER_EV_ENABLE,   0x1C
+/* LOAD sub-registers — 4 bytes, MSB first */
+.equ TIMER_LOAD0,       0x00    /* bits[31:24] of load value  */
+.equ TIMER_LOAD1,       0x04    /* bits[23:16]                */
+.equ TIMER_LOAD2,       0x08    /* bits[15:8]                 */
+.equ TIMER_LOAD3,       0x0C    /* bits[7:0]  (LSB)           */
+/* RELOAD sub-registers — 4 bytes, MSB first */
+.equ TIMER_RELOAD0,     0x10    /* bits[31:24] of reload value */
+.equ TIMER_RELOAD1,     0x14    /* bits[23:16]                 */
+.equ TIMER_RELOAD2,     0x18    /* bits[15:8]                  */
+.equ TIMER_RELOAD3,     0x1C    /* bits[7:0]  (LSB)            */
+/* Control and event registers */
+.equ TIMER_EN,          0x20    /* write 1 to start, 0 to stop           */
+.equ TIMER_EV_PENDING,  0x3C    /* write 1 to CLEAR the interrupt        */
+.equ TIMER_EV_ENABLE,   0x40    /* write 1 to route timer → cpu line 11  */
+/* Pre-computed byte slices of TIMER_FREQ = 100,000,000 = 0x05F5E100 */
+.equ TIMER_FREQ_B0,     0x05    /* bits[31:24] */
+.equ TIMER_FREQ_B1,     0xF5    /* bits[23:16] */
+.equ TIMER_FREQ_B2,     0xE1    /* bits[15:8]  */
+.equ TIMER_FREQ_B3,     0x00    /* bits[7:0]   */
 
 /* ── Buzzer  (LiteX_GPIO Out)  ──────────────────────────────────────────────── */
 .equ BUZZER_BASE,       0xe0004000  /* bit 0: 1=on, 0=off */

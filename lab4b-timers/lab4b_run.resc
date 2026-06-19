@@ -1,0 +1,26 @@
+# =============================================================================
+# CS281 Lab 4b — Run Script (with time throttling)
+#
+# Identical to cs281_run.resc but adds:
+#   emulation SetAdvanceImmediately false
+#
+# This paces simulated time against the host wall clock so the 100 MHz timer
+# fires once per real second (TIMER_FREQ = 100,000,000 ticks @ 100 MHz = 1 s).
+# Without this, Renode races at maximum speed and the timer fires thousands of
+# times per second, flooding UART output.
+# =============================================================================
+
+mach create "CS281_Board"
+machine LoadPlatformDescription $platform
+
+emulation CreateServerSocketTerminal 3456 "uart_term" false
+connector Connect uart uart_term
+
+sysbus LoadELF $bin
+
+# ── Time throttle — 1 simulated second ≈ 1 real second ───────────────────────
+emulation SetAdvanceImmediately false
+
+echo "CS281 Lab 4b ready.  UART on telnet port 3456."
+echo "Timer will fire at ~1 Hz (real time)."
+start

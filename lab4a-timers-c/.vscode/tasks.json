@@ -1,0 +1,79 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "make",
+            "group": { "kind": "build", "isDefault": true },
+            "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "make clean",
+            "presentation": { "reveal": "always", "panel": "shared" },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run in Renode",
+            "type": "shell",
+            "command": "make run",
+            "dependsOn": ["Build"],
+            "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+            "problemMatcher": []
+        },
+        {
+            "label": "Start Renode Debug",
+            "type": "shell",
+            "command": "make run-debug",
+            "dependsOn": ["Build"],
+            "isBackground": true,
+            "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+            "problemMatcher": {
+                "pattern": { "regexp": "^NEVER_MATCHES$", "message": 1 },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Starting Renode debug session",
+                    "endsPattern": "CPU is HALTED"
+                }
+            }
+        },
+        {
+            "label": "Stop Renode",
+            "command": "echo ${input:terminate}",
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
+            "label": "UART Terminal",
+            "type": "shell",
+            "command": "telnet localhost 3456",
+            "presentation": { "reveal": "always", "panel": "dedicated" },
+            "problemMatcher": []
+        },
+        {
+            "label": "Renode Monitor",
+            "type": "shell",
+            "command": "make monitor-connect",
+            "presentation": { "reveal": "always", "panel": "dedicated" },
+            "problemMatcher": []
+        },
+        {
+            "label": "Disassemble",
+            "type": "shell",
+            "command": "make disasm",
+            "presentation": { "reveal": "always", "panel": "shared" },
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "terminate",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "terminateAll"
+        }
+    ]
+}

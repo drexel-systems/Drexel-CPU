@@ -1,5 +1,5 @@
 # =============================================================================
-# CS281 Lab 3 — Array Processing
+# CS281 Lab 4b — Interrupt-Based Timers
 # RISC-V RV32IM bare-metal build system
 # =============================================================================
 
@@ -17,7 +17,7 @@ BUILD    := build
 
 # ── Flags ─────────────────────────────────────────────────────────────────────
 ASFLAGS  := -march=rv32im_zicsr -mabi=ilp32 -g
-LDFLAGS  := -T $(LIB)/cs281.ld -nostdlib -Map=$(BUILD)/lab3.map -m elf32lriscv
+LDFLAGS  := -T $(LIB)/cs281.ld -nostdlib -Map=$(BUILD)/lab4b.map -m elf32lriscv
 
 # ── Sources and Objects ───────────────────────────────────────────────────────
 LIB_SRCS := $(LIB)/startup.S \
@@ -30,7 +30,7 @@ LIB_OBJS := $(patsubst $(LIB)/%.S, $(BUILD)/%.o, $(LIB_SRCS))
 APP_OBJS := $(patsubst %.S, $(BUILD)/%.o, $(APP_SRCS))
 OBJS     := $(LIB_OBJS) $(APP_OBJS)
 
-TARGET   := $(BUILD)/lab3.elf
+TARGET   := $(BUILD)/lab4b.elf
 
 # ── Renode / Debug Ports ──────────────────────────────────────────────────────
 RENODE    := renode
@@ -38,8 +38,8 @@ MON_PORT  := 1234
 UART_PORT := 3456
 GDB_PORT  := 3333
 
-RESC_RUN  := $(HARDWARE)/cs281_run.resc
-RESC_DBG  := $(HARDWARE)/cs281_debug.resc
+RESC_RUN  := lab4b_run.resc
+RESC_DBG  := lab4b_debug.resc
 
 # ── OS detection (for kill-renode) ────────────────────────────────────────────
 ifeq ($(OS),Windows_NT)

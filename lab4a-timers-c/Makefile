@@ -1,12 +1,11 @@
 # =============================================================================
-# CS281 Lab 3 — Array Processing
+# CS281 Lab 4a — Interrupt-Based Timers (C)
 # RISC-V RV32IM bare-metal build system
 # =============================================================================
 
 # ── Toolchain ─────────────────────────────────────────────────────────────────
 CROSS   := riscv64-elf
-AS      := $(CROSS)-as
-LD      := $(CROSS)-ld
+CC      := $(CROSS)-gcc
 OBJDUMP := $(CROSS)-objdump
 GDB     := $(CROSS)-gdb
 
@@ -16,21 +15,22 @@ LIB      := $(HARDWARE)/lib
 BUILD    := build
 
 # ── Flags ─────────────────────────────────────────────────────────────────────
-ASFLAGS  := -march=rv32im_zicsr -mabi=ilp32 -g
-LDFLAGS  := -T $(LIB)/cs281.ld -nostdlib -Map=$(BUILD)/lab3.map -m elf32lriscv
+CFLAGS   := -march=rv32im_zicsr -mabi=ilp32 -g -O0 -ffreestanding -nostdlib \
+             -Wall -Wextra
+LDFLAGS  := -T $(LIB)/cs281.ld -nostdlib
 
-# ── Sources and Objects ───────────────────────────────────────────────────────
+# ── Sources ───────────────────────────────────────────────────────────────────
 LIB_SRCS := $(LIB)/startup.S \
              $(LIB)/uart.S \
              $(LIB)/exit.S
 
-APP_SRCS := main.S
+APP_SRCS := main.c
 
 LIB_OBJS := $(patsubst $(LIB)/%.S, $(BUILD)/%.o, $(LIB_SRCS))
-APP_OBJS := $(patsubst %.S, $(BUILD)/%.o, $(APP_SRCS))
+APP_OBJS := $(patsubst %.c, $(BUILD)/%.o, $(APP_SRCS))
 OBJS     := $(LIB_OBJS) $(APP_OBJS)
 
-TARGET   := $(BUILD)/lab3.elf
+TARGET   := $(BUILD)/lab4a.elf
 
 # ── Renode / Debug Ports ──────────────────────────────────────────────────────
 RENODE    := renode
@@ -38,8 +38,8 @@ MON_PORT  := 1234
 UART_PORT := 3456
 GDB_PORT  := 3333
 
-RESC_RUN  := $(HARDWARE)/cs281_run.resc
-RESC_DBG  := $(HARDWARE)/cs281_debug.resc
+RESC_RUN  := lab4a_run.resc
+RESC_DBG  := lab4a_debug.resc
 
 # ── OS detection (for kill-renode) ────────────────────────────────────────────
 ifeq ($(OS),Windows_NT)
@@ -48,7 +48,7 @@ else
     KILL_RENODE := pkill -f renode 2>/dev/null; sleep 0.5; true
 endif
 
-# ── Default Target ────────────────────────────────────────────────────────────
+# ── Build ─────────────────────────────────────────────────────────────────────
 .PHONY: all
 all: $(BUILD) $(TARGET)
 
@@ -56,13 +56,13 @@ $(BUILD):
 	mkdir -p $(BUILD)
 
 $(BUILD)/%.o: $(LIB)/%.S | $(BUILD)
-	$(AS) $(ASFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(BUILD)/%.o: %.S | $(BUILD)
-	$(AS) $(ASFLAGS) -o $@ $<
+$(BUILD)/%.o: %.c | $(BUILD)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(TARGET): $(OBJS)
-	$(LD) $(LDFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 	@echo ""
 	@echo "Memory usage:"
 	@$(OBJDUMP) -h $@ | awk '/\.(text|rodata|data|bss)/{printf "  %-12s 0x%s bytes\n", $$2, $$3}'
@@ -101,14 +101,6 @@ run-debug: $(TARGET) kill-renode
 	$(RENODE) --plain --disable-xwt \
 		-e '$$bin=@$(abspath $(TARGET)); $$platform=@$(abspath $(HARDWARE)/cs281_board.repl); i @$(abspath $(RESC_DBG))'
 
-.PHONY: debug-attach
-debug-attach: $(TARGET)
-	$(GDB) $(TARGET) \
-		-ex "set architecture riscv:rv32" \
-		-ex "target remote localhost:$(GDB_PORT)" \
-		-ex "layout asm" \
-		-ex "layout regs"
-
 .PHONY: uart-connect
 uart-connect:
 	@echo "Connecting to UART on port $(UART_PORT)  (Ctrl-] then 'quit' to exit)"
@@ -116,7 +108,6 @@ uart-connect:
 
 .PHONY: monitor-connect
 monitor-connect:
-	@echo "Connecting to Renode monitor on port $(MON_PORT)  (type 'quit' to exit Renode)"
 	telnet localhost $(MON_PORT)
 
 .PHONY: disasm

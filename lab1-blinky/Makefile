@@ -106,7 +106,7 @@ kill-renode:
 #   gpio_in SetGPIO 0 true     — press BTN0
 #   quit                       — exit Renode
 .PHONY: run
-run: $(TARGET)
+run: $(TARGET) kill-renode
 	@echo "──────────────────────────────────────────────────"
 	@echo " Starting Renode (headless)"
 	@echo " UART    → telnet localhost $(UART_PORT)  (make uart-connect)"

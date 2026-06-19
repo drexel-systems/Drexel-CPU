@@ -1,0 +1,16 @@
+mach create "CS281_Board"
+machine LoadPlatformDescription $platform
+emulation CreateServerSocketTerminal 3456 "uart_term" false
+connector Connect uart uart_term
+sysbus LoadELF $bin
+emulation SetAdvanceImmediately false
+machine StartGdbServer 3333 true
+echo ""
+echo "╔══════════════════════════════════════════════════╗"
+echo "║  CS281 Lab 4a Debug Session Ready                ║"
+echo "║  GDB stub  →  localhost:3333                     ║"
+echo "║  UART      →  telnet localhost 3456              ║"
+echo "║  Timer fires at ~1 Hz (real time)                ║"
+echo "║  CPU is HALTED — press F5 in VS Code             ║"
+echo "╚══════════════════════════════════════════════════╝"
+echo ""

@@ -1,0 +1,8 @@
+mach create "CS281_Board"
+machine LoadPlatformDescription $platform
+emulation CreateServerSocketTerminal 3456 "uart_term" false
+connector Connect uart uart_term
+sysbus LoadELF $bin
+emulation SetAdvanceImmediately false
+echo "CS281 Lab 4a ready.  UART on telnet port 3456."
+start
