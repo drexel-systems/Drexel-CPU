@@ -1,0 +1,17 @@
+{
+    // Recommended VS Code extensions for CS281 RISC-V development.
+    // VS Code will prompt to install these when you open the folder.
+    "recommendations": [
+        // Debugger — works with Renode's GDB stub (servertype: external)
+        "marus25.cortex-debug",
+
+        // C/C++ IntelliSense (useful for lab headers and later C labs)
+        "ms-vscode.cpptools",
+
+        // Native GDB debug adapter (alternative to cortex-debug)
+        "webfreak.debug",
+
+        // RISC-V assembly syntax highlighting
+        "zhwu95.riscv"
+    ]
+}

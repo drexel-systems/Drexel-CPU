@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug on Renode",
+            "type": "gdb",
+            "request": "attach",
+            "executable": "${workspaceFolder}/build/lab3.elf",
+            "target": "localhost:3333",
+            "remote": true,
+            "cwd": "${workspaceFolder}",
+            "gdbpath": "riscv64-elf-gdb",
+            "stopAtConnect": true,
+            "preLaunchTask": "Start Renode Debug",
+            "postDebugTask": "Stop Renode",
+            "autorun": [
+                "set pagination off",
+                "set confirm off",
+                "set architecture riscv:rv32",
+                "set mem inaccessible-by-default off",
+                "delete breakpoints",
+                "break main",
+                "continue"
+            ]
+        }
+    ]
+}
