@@ -22,12 +22,24 @@ sysbus LoadELF $bin
 # ── Time throttle — paces simulation to wall-clock speed ─────────────────────
 emulation SetAdvanceImmediately false
 
+# ── Button macros — press + release in one command ───────────────────────────
+macro btn0Press
+"""
+    sysbus.gpio_in OnGPIO 0 True
+    sysbus.gpio_in OnGPIO 0 False
+"""
+
+macro btn1Press
+"""
+    sysbus.gpio_in OnGPIO 1 True
+    sysbus.gpio_in OnGPIO 1 False
+"""
+
 echo "CS281 Lab 5 ready."
 echo "UART on telnet port 3456."
 echo ""
 echo "Simulate buttons from the monitor terminal (make monitor-connect):"
-echo "  sysbus.gpio_in OnGPIO 0 True    # BTN0 press  -> toggle LED0"
-echo "  sysbus.gpio_in OnGPIO 1 True    # BTN1 press  -> toggle LED1"
-echo "  sysbus.gpio_in OnGPIO 0 False   # BTN0 release (no IRQ)"
+echo "  runMacro $btn0Press    # BTN0 press -> toggle LED0"
+echo "  runMacro $btn1Press    # BTN1 press -> toggle LED1"
 echo ""
 start
