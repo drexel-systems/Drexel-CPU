@@ -74,6 +74,11 @@ func startupTick(step int, delay time.Duration) tea.Cmd {
 	})
 }
 
+// ── PC polling messages ───────────────────────────────────────────────────────
+
+// pcPollTickMsg fires every second to trigger a "cpu PC" monitor query.
+type pcPollTickMsg struct{}
+
 // ── Model ─────────────────────────────────────────────────────────────────────
 
 type model struct {
@@ -98,6 +103,11 @@ type model struct {
 	uartPartial string // bytes received that haven't yet ended with '\n'
 	viewport    viewport.Model
 	vpReady     bool
+
+	// CPU state detection (PC polling)
+	cpuHalted   bool
+	lastPC      string
+	pcSameCount int
 
 	// Config
 	monPort  int
@@ -177,7 +187,68 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.seg7 = 0x00
 				m.dips = [4]bool{}
 				m.uartPartial = ""
+				m.cpuHalted = false
+				m.lastPC = ""
+				m.pcSameCount = 0
 				cmds = append(cmds, old.close())
+			}
+
+		case "r", "R":
+			if m.state == stRunning && m.mon != nil {
+				// Soft-reset: pause → rewind PC to _start → resume.
+				// We avoid "machine Reset" because that sends the CPU to the
+				// RISC-V default reset vector (0x1000) which is outside our
+				// ROM, causing an immediate abort. Instead we just rewind PC
+				// to 0x20000000 (_start) so startup.S re-runs and re-inits
+				// .data/.bss and peripherals without touching Renode state.
+				m.leds = [4]bool{}
+				m.seg7 = 0x3F // show "0" after reset
+				m.dips = [4]bool{}
+				m.cpuHalted = false
+				m.lastPC = ""
+				m.pcSameCount = 0
+				m.uartLines = append(m.uartLines, "", "╌╌╌  Board Reset  ╌╌╌", "")
+				m.uartPartial = ""
+				if m.vpReady {
+					m.viewport.SetContent(vpContent(&m))
+					m.viewport.GotoBottom()
+				}
+				// Use sendSeq so all commands go to the monitor in one
+				// goroutine — concurrent sends race on the shared Writer.
+				// Clear GPIO_IN lines explicitly: the PC-rewind doesn't touch
+				// peripheral registers, so Renode's GPIO state would otherwise
+				// be out of sync with the UI's freshly-zeroed dips[].
+				cmds = append(cmds,
+					m.mon.sendSeq(
+						"pause",
+						"sysbus.gpio_in OnGPIO 0 False",
+						"sysbus.gpio_in OnGPIO 1 False",
+						"sysbus.gpio_in OnGPIO 2 False",
+						"sysbus.gpio_in OnGPIO 3 False",
+						"cpu PC 0x20000000",
+						"start",
+					),
+				)
+			}
+
+		case "esc":
+			// Skip the self-test / POST-OK banner and go straight to live mode.
+			if (m.state == stStartup || m.state == stPostTest) && m.mon != nil {
+				m.seg7 = 0x3F // show "0"
+				m.leds = [4]bool{}
+				m.dips = [4]bool{}
+				m.state = stRunning
+				if m.vpReady {
+					m.viewport.SetContent(vpContent(&m))
+					m.viewport.GotoBottom()
+				}
+				// Pending startupTickMsg / postTestDoneMsg will be dropped
+				// because their handlers guard on m.state.
+				// Kick off PC polling, which postTestDoneMsg would normally start.
+				cmds = append(cmds,
+					tea.Tick(1*time.Second, func(_ time.Time) tea.Msg { return pcPollTickMsg{} }),
+					waitMonResp(m.mon.respCh),
+				)
 			}
 
 		// Button presses — only active when fully running
@@ -286,6 +357,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.viewport.SetContent(vpContent(&m))
 			m.viewport.GotoBottom()
 		}
+		// Start PC polling to detect CPU running/halted.
+		cmds = append(cmds,
+			tea.Tick(1*time.Second, func(_ time.Time) tea.Msg { return pcPollTickMsg{} }),
+			waitMonResp(m.mon.respCh),
+		)
 
 	// ── UART data ─────────────────────────────────────────────────────────────
 	case uartDataMsg:
@@ -320,6 +396,35 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 		m.state = stError
 		m.errMsg = "Connection lost: " + msg.err.Error()
+
+	// ── PC poll tick ──────────────────────────────────────────────────────────
+	case pcPollTickMsg:
+		if m.state != stRunning || m.mon == nil {
+			break // stop polling when not running
+		}
+		cmds = append(cmds,
+			m.mon.pollPC(),
+			tea.Tick(1*time.Second, func(_ time.Time) tea.Msg { return pcPollTickMsg{} }),
+		)
+
+	// ── Monitor response (PC value) ───────────────────────────────────────────
+	case monRespMsg:
+		if m.state != stRunning || m.mon == nil {
+			break
+		}
+		pc := string(msg)
+		if pc == m.lastPC {
+			m.pcSameCount++
+			if m.pcSameCount >= 6 {
+				m.cpuHalted = true
+			}
+		} else {
+			m.lastPC = pc
+			m.pcSameCount = 0
+			m.cpuHalted = false
+		}
+		// Continue listening for the next response.
+		cmds = append(cmds, waitMonResp(m.mon.respCh))
 	}
 
 	return m, tea.Batch(cmds...)
@@ -339,8 +444,11 @@ func (m model) View() string {
 // vpHeight calculates how many lines are available for the UART viewport.
 // Fixed chrome = border(2) + title(1) + status(1) + divider(1) + board(7) +
 //
-//	divider(1) + uart-header(1) + divider(1) + divider(1) + cmdbar(1) = 17
-const fixedChrome = 17
+//	divider(1) + uart-header(1) + divider(1) + divider(1) + cmdbar(2) = 18
+//
+// The stRunning cmd bar intentionally uses 2 lines to keep all bindings
+// visible without wrapping on an 80-column terminal.
+const fixedChrome = 18
 
 func vpHeight(termH int) int {
 	h := termH - fixedChrome

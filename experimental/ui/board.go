@@ -72,6 +72,9 @@ var (
 	startupSt    = lipgloss.NewStyle().Foreground(clrGold).Bold(true)
 	poweredOffSt = lipgloss.NewStyle().Foreground(clrOff)
 	connectingSt = lipgloss.NewStyle().Foreground(clrConn)
+
+	cpuRunSt  = lipgloss.NewStyle().Foreground(clrRunning).Bold(true)
+	cpuHaltSt = lipgloss.NewStyle().Foreground(clrAmber).Bold(true)
 )
 
 // ── Column widths ─────────────────────────────────────────────────────────────
@@ -79,15 +82,15 @@ var (
 const (
 	colInputs = 26
 	colSeg7   = 13
-	// colLEDs = innerW - colInputs - colSeg7 - 2 (dividers)
+	colLEDs   = 18 // fixed LED column width; STATUS column fills the remainder
 )
 
 // ── Top-level frame ───────────────────────────────────────────────────────────
 
 func renderFrame(m model) string {
 	iw := m.width - 2 // inner width: border takes 1 char each side
-	if iw < 60 {
-		iw = 60
+	if iw < 76 {
+		iw = 76 // needs 26+13+18+16+3 dividers minimum
 	}
 
 	var b strings.Builder
@@ -143,25 +146,27 @@ func renderStatus(m model) string {
 
 // ── Board hardware row ────────────────────────────────────────────────────────
 
-// renderBoardRows produces 7 fixed-height rows showing inputs, 7-seg, and LEDs
-// side-by-side, separated by │ dividers.
+// renderBoardRows produces 7 fixed-height rows showing inputs, 7-seg, LEDs,
+// and a STATUS panel (CPU indicator + Reset button) separated by │ dividers.
 func renderBoardRows(m model, iw int) []string {
-	ledsW := iw - colInputs - colSeg7 - 2 // 2 = two │ dividers
-	if ledsW < 18 {
-		ledsW = 18
+	statusW := iw - colInputs - colSeg7 - colLEDs - 3 // 3 = three │ dividers
+	if statusW < 14 {
+		statusW = 14
 	}
 
 	inputs := buildInputsCol(m)
 	seg7   := buildSeg7Col(m.seg7)
 	leds   := buildLEDsCol(m)
+	status := buildStatusCol(m)
 
 	div := subtleSt.Render("│")
 	rows := make([]string, 7)
 	for i := range rows {
-		ic := col(safeGet(inputs, i), colInputs)
-		sc := center(safeGet(seg7, i), colSeg7)
-		lc := col(safeGet(leds, i), ledsW)
-		rows[i] = ic + div + sc + div + lc
+		ic  := col(safeGet(inputs, i), colInputs)
+		sc  := center(safeGet(seg7, i), colSeg7)
+		lc  := col(safeGet(leds, i), colLEDs)
+		stc := col(safeGet(status, i), statusW)
+		rows[i] = ic + div + sc + div + lc + div + stc
 	}
 	return rows
 }
@@ -264,6 +269,41 @@ func buildLEDsCol(m model) []string {
 	}
 }
 
+// ── Status column (CPU indicator + Reset button) ──────────────────────────────
+
+func buildStatusCol(m model) []string {
+	active := m.state == stRunning
+
+	// CPU running / halted indicator
+	var cpuLine string
+	if active {
+		if m.cpuHalted {
+			cpuLine = "  CPU  " + cpuHaltSt.Render("○ HLT")
+		} else {
+			cpuLine = "  CPU  " + cpuRunSt.Render("● RUN")
+		}
+	}
+
+	// Reset button — styled like a physical pushbutton
+	btnSt := subtleSt
+	if active {
+		btnSt = keySt
+	}
+	btnTop := "  " + btnSt.Render("╔══════╗")
+	btnMid := "  " + btnSt.Render("║ RST  ║")
+	btnBot := "  " + btnSt.Render("╚══════╝")
+
+	return []string{
+		sectionSt.Render("  STATUS"),
+		"",
+		cpuLine,
+		"",
+		btnTop,
+		btnMid,
+		btnBot,
+	}
+}
+
 // ── DIP switch indicator ──────────────────────────────────────────────────────
 
 func renderDIP(on bool) string {
@@ -288,20 +328,26 @@ func renderCmdBar(m model, iw int) string {
 
 	case stStartup:
 		parts = startupSt.Render("Self-test in progress…") +
+			"    " + keySt.Render("[Esc]") + " Skip" +
 			"    " + keySt.Render("[P]") + " Power Down" +
 			"    " + keySt.Render("[Q]") + " Quit"
 
 	case stPostTest:
 		parts = runningSt.Render("Power On Self Test OK") +
+			"    " + keySt.Render("[Esc]") + " Skip" +
 			"    " + keySt.Render("[Q]") + " Quit"
 
 	case stRunning:
-		parts = keySt.Render("[0]") + " BTN0  " +
-			keySt.Render("[1]") + " BTN1  " +
-			keySt.Render("[2]") + " DIP0  " +
-			keySt.Render("[3]") + " DIP1" +
-			"    " + keySt.Render("[P]") + " Power Down" +
-			"    " + keySt.Render("[Q]") + " Quit"
+		// Two lines, column-aligned so [P] sits under [1] and [Q] under [3].
+		// col() pads to exact visible width, correctly ignoring ANSI codes.
+		line1 := col(keySt.Render("[0]")+" BTN0", 10) +
+			col(keySt.Render("[1]")+" BTN1", 10) +
+			col(keySt.Render("[2]")+" DIP0", 10) +
+			keySt.Render("[3]") + " DIP1"
+		line2 := col(keySt.Render("[R]")+" Reset", 10) +
+			col(keySt.Render("[P]")+" Power Down", 20) +
+			keySt.Render("[Q]") + " Quit"
+		parts = line1 + "\n  " + line2
 
 	case stError:
 		// Wrap error message, then retry/quit

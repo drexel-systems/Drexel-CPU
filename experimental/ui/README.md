@@ -5,25 +5,26 @@ running Renode session over TCP and lets students interact with LEDs, DIP
 switches, and the 7-segment display without touching the Renode monitor prompt.
 
 ```
-╭─────────────────────────────────────────────────────────────────╮
-│               CS281 Virtual Development Board                    │
-│                         ◉  RUNNING                              │
-│─────────────────────────────────────────────────────────────────│
-│  INPUTS            │    7-SEG    │  LEDs                        │
-│                    │             │                               │
-│  [0] BTN0  mom     │    ───      │  ⬤ LED0    ○ LED1           │
-│  [1] BTN1  mom     │   █   █     │  ○ LED2    ○ LED3           │
-│  [2] DIP0  ▽ off   │    ───      │                               │
-│  [3] DIP1  ▽ off   │   █   █     │                               │
-│                    │    ───      │                               │
-│─────────────────────────────────────────────────────────────────│
-│  UART OUTPUT                              ↑↓ / j k / scroll     │
-│─────────────────────────────────────────────────────────────────│
-│  Main loop running...                                            │
-│  . . . . [BTN0] LED0 ON . . . [BTN0] LED0 OFF . . .            │
-│─────────────────────────────────────────────────────────────────│
-│  [0] BTN0  [1] BTN1  [2] DIP0  [3] DIP1  [P] Power Down  [Q] Quit │
-╰─────────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────╮
+│               CS281 Virtual Development Board                        │
+│                         ◉  RUNNING                                  │
+│─────────────────────────────────────────────────────────────────────│
+│  INPUTS          │   7-SEG   │  LEDs         │  STATUS              │
+│                  │           │               │                      │
+│  [0] BTN0  mom   │   ───     │  ⬤ LED0 ○LED1 │  CPU  ● RUN         │
+│  [1] BTN1  mom   │  █   █    │  ○ LED2 ○LED3 │                     │
+│  [2] DIP0  ▽off  │   ───     │               │  ╔══════╗            │
+│  [3] DIP1  ▽off  │  █   █    │               │  ║ RST  ║            │
+│                  │   ───     │               │  ╚══════╝            │
+│─────────────────────────────────────────────────────────────────────│
+│  UART OUTPUT                                   ↑↓ / j k / scroll    │
+│─────────────────────────────────────────────────────────────────────│
+│  Main loop running...                                                │
+│  . . . . [BTN0] LED0 ON . . . [BTN0] LED0 OFF . . .                │
+│─────────────────────────────────────────────────────────────────────│
+│  [0] BTN0  [1] BTN1  [2] DIP0  [3] DIP1                            │
+│  [R] Reset     [P] Power Down      [Q] Quit                         │
+╰─────────────────────────────────────────────────────────────────────╯
 ```
 
 > **Experimental** — lives in `experimental/` intentionally. Renode must be
@@ -53,7 +54,8 @@ make run          # go mod tidy + go run .
 ```
 
 Press **P** to power up and connect. The board runs a self-test animation,
-then goes live.
+then goes live. Press **Esc** at any point during the self-test to skip
+straight to live mode.
 
 ---
 
@@ -88,7 +90,9 @@ make all           # cross-compile all five platforms → bin/
 | Key | State | Action |
 |-----|-------|--------|
 | `P` | Powered Down / Error | Power Up — connect to Renode, run self-test |
-| `P` | Running | Power Down — disconnect (Renode keeps running) |
+| `P` | Running / Self-test | Power Down — disconnect (Renode keeps running) |
+| `Esc` | Self-test / POST-OK | Skip self-test and go straight to live mode |
+| `R` | Running | Soft-reset — rewinds CPU to `_start`, clears GPIO and UART pane |
 | `0` | Running | Press BTN0 (`runMacro $btn0Press`) |
 | `1` | Running | Press BTN1 (`runMacro $btn1Press`) |
 | `2` | Running | Toggle DIP0 |
@@ -106,18 +110,20 @@ make all           # cross-compile all five platforms → bin/
 
 ```
 POWERED DOWN ──[P]──► CONNECTING ──► STARTUP ──► POST-TEST ──► RUNNING
-     ▲                                                              │
-     └──────────────────────────[P]──────────────────────────────┘
-                                                         │
-                              ERROR ◄── connection lost ─┘
+     ▲                                  │             │             │
+     │                               [Esc]         [Esc]           │
+     │                                  └─────────────┘            │
+     └──────────────────────────────[P]────────────────────────────┘
+                                                          │
+                                   ERROR ◄── conn lost ───┘
 ```
 
 | State | Description |
 |-------|-------------|
 | **POWERED DOWN** | Idle. No connection. |
 | **CONNECTING** | TCP dial in progress (3 s timeout). Syncs GPIO_OUT register. |
-| **SELF-TEST** | Startup animation plays: LEDs, DIPs, 7-seg 0–9. UART buffered silently. |
-| **POST-TEST** | Displays "POST OK" banner for 2 seconds. UART still buffered. |
+| **SELF-TEST** | Startup animation plays: LEDs, DIPs, 7-seg 0–9. UART buffered silently. Press Esc to skip. |
+| **POST-TEST** | Displays "POST OK" banner for 2 seconds. UART still buffered. Press Esc to skip. |
 | **RUNNING** | Live. UART streams, keypresses drive Renode. |
 | **ERROR** | Connection lost or failed. Press P to retry. |
 
@@ -131,7 +137,7 @@ follows Bubbletea's Elm-style model/update/view architecture.
 ```
 main.go          Entry point — flags, tea.NewProgram
 model.go         State machine, Update(), all message types, startup sequence
-board.go         View layer — renderFrame(), LED/7-seg/DIP rendering, colours
+board.go         View layer — renderFrame(), LED/7-seg/DIP/status rendering, colours
 connection.go    TCP dial, monitor sync, UART goroutine, tea.Cmd wrappers
 ```
 
@@ -154,10 +160,41 @@ to a board that has been running for a while.
 **Startup self-test** — a 23-step animation sequence (defined as a slice of
 `startupAction` in `model.go`) drives the hardware widgets via `tea.Tick`.
 UART data is collected in the background during the test and rendered only
-after the POST-OK banner clears.
+after the POST-OK banner clears. Press `Esc` during either phase to skip
+directly to live mode.
+
+**CPU state detection** — once the board is running, the UI polls `cpu PC`
+every second via the Renode monitor. The drain goroutine forwards any line
+starting with `0x` to a channel in the model. If the same PC value is observed
+6 times in a row (~6 s) the CPU is flagged **HLT** (amber `○ HLT`) in the
+STATUS column; any change resets the counter and shows **RUN** (green `● RUN`).
+This is a heuristic — programs that use `wfi` in a tight loop may read as
+halted if no interrupt fires for 6 seconds, but will recover automatically
+when activity resumes.
+
+**Soft reset** — pressing `R` sends a sequence of monitor commands atomically
+(via `sendSeq`, which holds the shared writer lock): `pause`, clear all four
+GPIO_IN lines to `False`, `cpu PC 0x20000000`, `start`. This rewinds the
+program counter to `_start` without using `machine Reset`, which would send
+the RISC-V CPU to its default reset vector at `0x1000` (outside our ROM).
+The startup code in `startup.S` re-runs on resume, re-initialising `.data`,
+zeroing `.bss`, and re-registering peripheral interrupts. The UI clears
+LED / DIP / 7-seg state and inserts a separator in the UART pane. No
+self-test replay; the board goes straight back to live UART output.
 
 **Hard wrapping** — the viewport receives hard-wrapped content so long UART
 lines fold at the viewport boundary instead of truncating or scrolling sideways.
+
+### Board panel layout
+
+The hardware panel has four fixed-width columns separated by `│`:
+
+| Column | Width | Contents |
+|--------|-------|----------|
+| INPUTS | 26 | Button / DIP key bindings |
+| 7-SEG | 13 | 7-segment display (amber segments) |
+| LEDs | 18 | Four coloured LED indicators |
+| STATUS | remainder | CPU RUN/HLT indicator + RST button visual |
 
 ### LED colours
 
@@ -183,11 +220,18 @@ lines fold at the viewport boundary instead of truncating or scrolling sideways.
 
 - LED state is inferred by parsing UART output for `LED0 ON` / `LED0 OFF`
   patterns. If students rename those strings, the LED indicators stop tracking.
-  A future version should poll `GPIO_OUT` from the Renode monitor periodically.
+  GPIO_OUT is read once on connect to seed initial state, but is not polled
+  continuously.
 
-- The 7-segment display shows `0` by default and is not yet updated from live
-  firmware output (no lab uses it yet). Future labs will drive it via UART
-  parsing or a monitor poll.
+- The 7-segment display shows `0` by default and is not updated from live
+  firmware output (no lab drives it via UART yet). Future labs will control it
+  directly via the 7-seg peripheral register.
 
-- DIP switch state in the UI is tracked locally only; the UI does not read
-  back the actual GPIO_IN register on connect.
+- DIP switch state is tracked locally in the UI. The GPIO_IN register is not
+  read back on connect, so if a lab session is rejoined mid-run the DIP
+  indicators may not reflect the actual hardware state until the student
+  presses the corresponding key.
+
+- The CPU HLT indicator is a heuristic (6 consecutive identical PC readings).
+  Programs using `wfi` in a tight main loop may briefly appear halted if no
+  interrupt fires for ~6 seconds.
