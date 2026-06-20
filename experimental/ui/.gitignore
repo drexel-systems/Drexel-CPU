@@ -1,0 +1,20 @@
+# Compiled binaries
+bin/
+cs281ui
+cs281ui.exe
+
+# Go test and coverage artifacts
+*.test
+*.out
+coverage.html
+
+# Dependency vendor directory (go.sum is tracked; vendor is not)
+vendor/
+
+# macOS metadata
+.DS_Store
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
