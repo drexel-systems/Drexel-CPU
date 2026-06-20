@@ -51,6 +51,11 @@ lab4b-timers/           Lab 4b: LiteX Timer interrupt in assembly (student TODO)
   main.S
   Makefile
   .vscode/              Tasks, launch config, IntelliSense settings
+
+lab5-gpio-input/        Lab 5: GPIO input interrupts — button presses toggle LEDs
+  main.S
+  Makefile
+  .vscode/              Tasks, launch config, IntelliSense settings
 ```
 
 ## Hardware
@@ -67,7 +72,7 @@ The CS281 board is a custom virtual platform defined in [`hardware/cs281_board.r
 - **LiteX Timer** (`0xe0002000`) — A countdown timer with configurable load, auto-reload, and an IRQ on line 11. Useful for periodic interrupts without touching the CLINT. **Important:** the timer uses 8-bit CSR sub-registers — the 32-bit LOAD and RELOAD values are each split across four 8-bit registers at consecutive 4-byte addresses, written MSB first (offsets 0x00–0x0C for LOAD, 0x10–0x1C for RELOAD). Control registers: `EN` at 0x20, `EV_PENDING` at 0x3C (write 1 to clear), `EV_ENABLE` at 0x40 (write 1 to route to CPU line 11). See the TRM Section 6 for the complete register table and ISR pattern.
 - **CLINT** (`0xe0005000`) — The standard RISC-V Core-Level Interruptor. Provides `MTIME` (a 64-bit free-running counter at 100 MHz) and `MTIMECMP` (fires a machine timer interrupt on line 7 when `MTIME ≥ MTIMECMP`). Also provides `MSIP` (software interrupt on line 3).
 - **GPIO Output** (`0xe0015000`) — Four LEDs. Write a bitmask: bit 0 = LED0, bit 1 = LED1, bit 2 = LED2, bit 3 = LED3.
-- **GPIO Input** (`0xe0015400`) — Four inputs with an IRQ on line 12 triggered by any state change. Bit 0 = BTN0, bit 1 = BTN1, bit 2 = DIP\_SW0, bit 3 = DIP\_SW1. Drive inputs from the Renode monitor: `gpio_in SetGPIO 0 true`.
+- **GPIO Input** (`0xe0015400`) — Four inputs with an IRQ on line 12 triggered by rising edge of enabled pins. Bit 0 = BTN0, bit 1 = BTN1, bit 2 = DIP\_SW0, bit 3 = DIP\_SW1. Simulate from the Renode monitor: `sysbus.gpio_in OnGPIO 0 True` (press) / `sysbus.gpio_in OnGPIO 0 False` (release).
 - **7-Segment Display** (`0xe0004400`) — Eight GPIO output bits, one per segment (a–g + decimal point). Write a bitmask to light individual segments; common digit patterns are defined in `cs281.inc`.
 - **Buzzer** (`0xe0004000`) — Single-bit GPIO output. Write `0x1` to activate, `0x0` to silence.
 
@@ -91,10 +96,12 @@ The CS281 board is a custom virtual platform defined in [`hardware/cs281_board.r
 
 | Tool | Notes |
 |------|-------|
-| [Renode](https://renode.io/get/) | Tested with 1.16+ |
-| `riscv64-elf-*` toolchain | macOS: `brew install riscv-gnu-toolchain` |
+| [Renode](https://renode.io/get/) | 1.16+ — the emulator |
+| RISC-V GNU Toolchain | Provides `riscv64-elf-as`, `riscv64-elf-ld`, `riscv64-elf-gdb` |
 | `telnet` | For UART and monitor connections |
-| VS Code + [Native Debug](https://marketplace.visualstudio.com/items?itemName=webfreak.debug) | Optional, for graphical debugging (`webfreak.debug`) |
+| VS Code *(optional)* | `.vscode/` configs are provided in each lab for convenience, but any editor works |
+
+See **[docs/setup.md](docs/setup.md)** for step-by-step installation instructions on macOS, Windows, and Linux.
 
 ## Quick Start
 
@@ -127,13 +134,14 @@ make uart-connect # telnet to UART — see LED0 ON / LED0 OFF output
 Once connected via `make monitor-connect`:
 
 ```
-pause                        # halt CPU
-start                        # resume
-cpu PC                       # show program counter
-sysbus.gpio_led0 State       # read LED0 state (True/False)
-gpio_in SetGPIO 0 true       # press BTN0
-gpio_in SetGPIO 0 false      # release BTN0
-quit                         # exit Renode
+pause                              # halt CPU
+start                              # resume
+cpu PC                             # show program counter
+sysbus.gpio_led0 State             # read LED0 state (True/False)
+sysbus.gpio_in OnGPIO 0 True       # BTN0 press  (rising edge → IRQ)
+sysbus.gpio_in OnGPIO 0 False      # BTN0 release
+sysbus.gpio_in OnGPIO 1 True       # BTN1 press
+quit                               # exit Renode
 ```
 
 ## Lab Progression
@@ -145,6 +153,7 @@ quit                         # exit Renode
 | Lab 3 (`lab3-arrays`) | Indexed memory access, loops, RISC-V calling convention |
 | Lab 4a (`lab4a-timers-c`) | LiteX Timer interrupt in C — read before Lab 4b |
 | Lab 4b (`lab4b-timers`) | LiteX Timer interrupt in assembly — student implementation |
+| Lab 5 (`lab5-gpio-input`) | GPIO input interrupts, rising-edge trigger, IRQ_PENDING |
 
 ## Architecture
 

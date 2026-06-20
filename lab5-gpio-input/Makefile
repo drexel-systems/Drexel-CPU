@@ -1,5 +1,5 @@
 # =============================================================================
-# CS281 Lab 3 — Array Processing
+# CS281 Lab 5 — GPIO Input Interrupts
 # RISC-V RV32IM bare-metal build system
 # =============================================================================
 
@@ -17,7 +17,7 @@ BUILD    := build
 
 # ── Flags ─────────────────────────────────────────────────────────────────────
 ASFLAGS  := -march=rv32im_zicsr -mabi=ilp32 -g
-LDFLAGS  := -T $(LIB)/cs281.ld -nostdlib -Map=$(BUILD)/lab3.map -m elf32lriscv
+LDFLAGS  := -T $(LIB)/cs281.ld -nostdlib -Map=$(BUILD)/lab5.map -m elf32lriscv
 
 # ── Sources and Objects ───────────────────────────────────────────────────────
 LIB_SRCS := $(LIB)/startup.S \
@@ -30,7 +30,7 @@ LIB_OBJS := $(patsubst $(LIB)/%.S, $(BUILD)/%.o, $(LIB_SRCS))
 APP_OBJS := $(patsubst %.S, $(BUILD)/%.o, $(APP_SRCS))
 OBJS     := $(LIB_OBJS) $(APP_OBJS)
 
-TARGET   := $(BUILD)/lab3.elf
+TARGET   := $(BUILD)/lab5.elf
 
 # ── Renode / Debug Ports ──────────────────────────────────────────────────────
 RENODE    := renode
@@ -38,8 +38,8 @@ MON_PORT  := 1234
 UART_PORT := 3456
 GDB_PORT  := 3333
 
-RESC_RUN  := $(HARDWARE)/cs281_run.resc
-RESC_DBG  := $(HARDWARE)/cs281_debug.resc
+RESC_RUN  := lab5_run.resc
+RESC_DBG  := lab5_debug.resc
 
 # ── OS detection (for kill-renode) ────────────────────────────────────────────
 ifeq ($(OS),Windows_NT)
@@ -82,11 +82,11 @@ kill-renode:
 .PHONY: run
 run: $(TARGET) kill-renode
 	@echo "──────────────────────────────────────────────────"
-	@echo " Starting Renode (headless)"
-	@echo " UART    → telnet localhost $(UART_PORT)  (make uart-connect)"
-	@echo " Monitor → telnet localhost $(MON_PORT)   (make monitor-connect)"
+	@echo " Starting Renode"
+	@echo " UART      → telnet localhost $(UART_PORT)  (make uart-connect)"
+	@echo " Monitor   → telnet localhost $(MON_PORT)   (make monitor-connect)"
 	@echo "──────────────────────────────────────────────────"
-	$(RENODE) --disable-xwt \
+	$(RENODE) --plain --disable-xwt \
 		-e '$$bin=@$(abspath $(TARGET)); $$platform=@$(abspath $(HARDWARE)/cs281_board.repl); i @$(abspath $(RESC_RUN))'
 
 .PHONY: run-debug
@@ -95,10 +95,10 @@ run-debug: $(TARGET) kill-renode
 	@echo " Starting Renode debug session"
 	@echo " GDB stub  → localhost:$(GDB_PORT)"
 	@echo " UART      → telnet localhost $(UART_PORT)  (make uart-connect)"
-	@echo " Monitor   → telnet localhost $(MON_PORT)   (make monitor-connect)"
+	@echo " Monitor   → THIS terminal (stdin/stdout)"
 	@echo " CPU is HALTED — connect GDB or press F5 in VS Code"
 	@echo "──────────────────────────────────────────────────"
-	$(RENODE) --disable-xwt \
+	$(RENODE) --plain --disable-xwt \
 		-e '$$bin=@$(abspath $(TARGET)); $$platform=@$(abspath $(HARDWARE)/cs281_board.repl); i @$(abspath $(RESC_DBG))'
 
 .PHONY: debug-attach
@@ -116,7 +116,7 @@ uart-connect:
 
 .PHONY: monitor-connect
 monitor-connect:
-	@echo "Connecting to Renode monitor on port $(MON_PORT)  (type 'quit' to exit Renode)"
+	@echo "Connecting to Renode monitor on port $(MON_PORT)  (Ctrl-] then 'quit' to exit)"
 	telnet localhost $(MON_PORT)
 
 .PHONY: disasm

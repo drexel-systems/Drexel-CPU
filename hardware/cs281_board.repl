@@ -23,7 +23,8 @@
 //   cpu line 12  — GPIO Input (state change)
 //
 // GPIO Input (driven via Renode monitor)
-//   gpio_in SetGPIO <pin> true/false
+//   sysbus.gpio_in OnGPIO <pin> True    # drive pin high (rising edge → IRQ)
+//   sysbus.gpio_in OnGPIO <pin> False   # drive pin low  (no IRQ in rising-edge mode)
 //     pin 0 = BTN0, pin 1 = BTN1, pin 2 = DIP_SW0, pin 3 = DIP_SW1
 //
 // 7-Segment Bitmask (write to 0xe0004400)
@@ -103,8 +104,21 @@ gpio_led2: Miscellaneous.LED @ gpio_out 2
 gpio_led3: Miscellaneous.LED @ gpio_out 3
 
 // GPIO Input — reads 4 board inputs (buttons + DIP switches)
-//   Drive via monitor:  gpio_in SetGPIO <pin> true/false
-//   Triggers IRQ → cpu line 12 on any state change.
+//   enableIrq activates IRQ_MODE/IRQ_EDGE/IRQ_PENDING/IRQ_ENABLE registers.
+//   Triggers IRQ → cpu line 12 on rising edge of enabled pins.
 gpio_in: GPIOPort.LiteX_GPIO @ sysbus 0xe0015400
     type: Type.In
+    enableIrq: true
     -> cpu @ 12
+
+// Buttons and DIP switches — connected to gpio_in pins 0-3
+//   Listed in peripherals tree for reference; drive via sysbus.gpio_in OnGPIO.
+//   sysbus.gpio_in OnGPIO 0 True    # BTN0 press  (rising edge → ISR fires)
+//   sysbus.gpio_in OnGPIO 0 False   # BTN0 release
+//   sysbus.gpio_in OnGPIO 1 True    # BTN1 press
+//   sysbus.gpio_in OnGPIO 2 True    # DIP_SW0 on
+//   sysbus.gpio_in OnGPIO 3 True    # DIP_SW1 on
+btn0:    Miscellaneous.Button @ gpio_in 0
+btn1:    Miscellaneous.Button @ gpio_in 1
+dip_sw0: Miscellaneous.Button @ gpio_in 2
+dip_sw1: Miscellaneous.Button @ gpio_in 3

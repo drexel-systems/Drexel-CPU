@@ -89,7 +89,7 @@ run: $(TARGET)
 	@echo " UART    → telnet localhost $(UART_PORT)  (make uart-connect)"
 	@echo " Monitor → telnet localhost $(MON_PORT)   (make monitor-connect)"
 	@echo "──────────────────────────────────────────────────"
-	$(RENODE) --plain --disable-xwt \
+	$(RENODE) --disable-xwt \
 		-e '$$bin=@$(abspath $(TARGET)); $$platform=@$(abspath $(HARDWARE)/cs281_board.repl); i @$(abspath $(RESC_RUN))'
 
 # ── Run Debug ─────────────────────────────────────────────────────────────────
@@ -102,7 +102,7 @@ run-debug: $(TARGET)
 	@echo " Monitor   → telnet localhost $(MON_PORT)   (make monitor-connect)"
 	@echo " CPU is HALTED — connect GDB or press F5 in VS Code"
 	@echo "──────────────────────────────────────────────────"
-	$(RENODE) --plain --disable-xwt \
+	$(RENODE) --disable-xwt \
 		-e '$$bin=@$(abspath $(TARGET)); $$platform=@$(abspath $(HARDWARE)/cs281_board.repl); i @$(abspath $(RESC_DBG))'
 
 # ── Attach GDB ────────────────────────────────────────────────────────────────

@@ -112,7 +112,7 @@ run: $(TARGET) kill-renode
 	@echo " UART    → telnet localhost $(UART_PORT)  (make uart-connect)"
 	@echo " Monitor → telnet localhost $(MON_PORT)   (make monitor-connect)"
 	@echo "──────────────────────────────────────────────────"
-	$(RENODE) --plain --disable-xwt \
+	$(RENODE) --disable-xwt \
 		-e '$$bin=@$(abspath $(TARGET)); $$platform=@$(abspath $(HARDWARE)/cs281_board.repl); i @$(abspath $(RESC_RUN))'
 
 # ── Run Debug ─────────────────────────────────────────────────────────────────
@@ -129,7 +129,7 @@ run-debug: $(TARGET) kill-renode
 	@echo " Monitor   → telnet localhost $(MON_PORT)   (make monitor-connect)"
 	@echo " CPU is HALTED — connect GDB or press F5 in VS Code"
 	@echo "──────────────────────────────────────────────────"
-	$(RENODE) --plain --disable-xwt \
+	$(RENODE) --disable-xwt \
 		-e '$$bin=@$(abspath $(TARGET)); $$platform=@$(abspath $(HARDWARE)/cs281_board.repl); i @$(abspath $(RESC_DBG))'
 
 # ── Attach GDB ────────────────────────────────────────────────────────────────
@@ -149,7 +149,7 @@ uart-connect:
 	telnet localhost $(UART_PORT)
 
 # ── Connect to Renode monitor ─────────────────────────────────────────────────
-# Renode opens its monitor on port 1234 automatically when run with --plain.
+# Renode serves its monitor on port 1234 when run with --disable-xwt.
 # Useful monitor commands:
 #   pause                        — halt the CPU
 #   start                        — resume execution

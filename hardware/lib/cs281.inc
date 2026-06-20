@@ -79,8 +79,27 @@
 .equ LED2,              0x04
 .equ LED3,              0x08
 
-/* ── GPIO Input  (LiteX_GPIO In)  ───────────────────────────────────────────── */
-.equ GPIO_IN_BASE,      0xe0015400  /* bits 0-3: buttons, DIP switches */
+/* ── GPIO Input  (LiteX_GPIO In, IRQ enabled)  ──────────────────────────────── */
+/* IRQ fires on rising edge (button press) by default.
+ * Default IRQ_MODE=0 (Edge) and IRQ_EDGE=0 (Rising) require no explicit init —
+ * only write to GPIO_IRQ_ENABLE to arm the pins you want.
+ *
+ * mcause when GPIO fires:  0x8000000C  (interrupt bit | cpu line 12)
+ *
+ * Register map (offsets from GPIO_IN_BASE):
+ *   0x00  GPIO_IN          read current pin state (bit N = pin N)
+ *   0x04  GPIO_IRQ_MODE    per-pin: 0=Edge, 1=Change
+ *   0x08  GPIO_IRQ_EDGE    per-pin: 0=Rising, 1=Falling  (Edge mode only)
+ *   0x0C  GPIO_IRQ_STATUS  read-only status
+ *   0x10  GPIO_IRQ_PENDING read pending bits; write 1 to CLEAR
+ *   0x14  GPIO_IRQ_ENABLE  write 1 to enable IRQ per pin             */
+.equ GPIO_IN_BASE,      0xe0015400
+.equ GPIO_IN,           0x00    /* read current pin state                */
+.equ GPIO_IRQ_MODE,     0x04    /* 0=Edge, 1=Change per pin              */
+.equ GPIO_IRQ_EDGE,     0x08    /* 0=Rising, 1=Falling per pin           */
+.equ GPIO_IRQ_STATUS,   0x0C    /* read-only status                      */
+.equ GPIO_IRQ_PENDING,  0x10    /* read: which pins pending; write 1=CLR */
+.equ GPIO_IRQ_ENABLE,   0x14    /* write 1 to enable IRQ for that pin    */
 
 .equ BTN0,              0x01
 .equ BTN1,              0x02

@@ -1,0 +1,36 @@
+# =============================================================================
+# CS281 Lab 5 — Debug Script
+#
+# GDB stub on port 3333, CPU halted until VS Code connects.
+# Time throttle is on so button-press interrupts arrive at a human pace.
+#
+# After connecting in VS Code (F5), trigger buttons from make monitor-connect:
+#   sysbus.gpio_in OnGPIO 0 True   # BTN0 press → ISR fires → debugger stops
+# =============================================================================
+
+mach create "CS281_Board"
+machine LoadPlatformDescription $platform
+
+emulation CreateServerSocketTerminal 3456 "uart_term" false
+connector Connect uart uart_term
+
+sysbus LoadELF $bin
+
+# ── Time throttle ─────────────────────────────────────────────────────────────
+emulation SetAdvanceImmediately false
+
+# ── GDB stub — CPU halted until GDB connects ──────────────────────────────────
+machine StartGdbServer 3333 true
+
+echo ""
+echo "╔══════════════════════════════════════════════════╗"
+echo "║  CS281 Lab 5 Debug Session Ready                  ║"
+echo "║  GDB stub  →  localhost:3333                     ║"
+echo "║  UART      →  telnet localhost 3456              ║"
+echo "║  CPU is HALTED — press F5 in VS Code             ║"
+echo "╚══════════════════════════════════════════════════╝"
+echo ""
+echo "Simulate buttons from make monitor-connect:"
+echo "  btn0 PressAndRelease"
+echo "  btn1 PressAndRelease"
+echo ""

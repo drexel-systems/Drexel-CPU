@@ -1,0 +1,33 @@
+# =============================================================================
+# CS281 Lab 5 — Run Script
+#
+# Uses emulation SetAdvanceImmediately false so the busy-wait dot loop runs
+# at a human-readable pace rather than flooding UART instantly.
+#
+# After Renode starts, press buttons from the monitor terminal (make monitor-connect):
+#   sysbus.gpio_in OnGPIO 0 True    # BTN0 press  → rising edge → ISR fires
+#   sysbus.gpio_in OnGPIO 0 False   # BTN0 release (no IRQ)
+#   sysbus.gpio_in OnGPIO 1 True    # BTN1 press  → ISR fires
+#   sysbus.gpio_in OnGPIO 1 False   # BTN1 release
+# =============================================================================
+
+mach create "CS281_Board"
+machine LoadPlatformDescription $platform
+
+emulation CreateServerSocketTerminal 3456 "uart_term" false
+connector Connect uart uart_term
+
+sysbus LoadELF $bin
+
+# ── Time throttle — paces simulation to wall-clock speed ─────────────────────
+emulation SetAdvanceImmediately false
+
+echo "CS281 Lab 5 ready."
+echo "UART on telnet port 3456."
+echo ""
+echo "Simulate buttons from the monitor terminal (make monitor-connect):"
+echo "  sysbus.gpio_in OnGPIO 0 True    # BTN0 press  -> toggle LED0"
+echo "  sysbus.gpio_in OnGPIO 1 True    # BTN1 press  -> toggle LED1"
+echo "  sysbus.gpio_in OnGPIO 0 False   # BTN0 release (no IRQ)"
+echo ""
+start
