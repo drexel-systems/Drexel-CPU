@@ -164,4 +164,54 @@ quit                               # exit Renode
 
 ---
 
+## Experimental: CS281 Board UI
+
+A terminal TUI that renders a virtual board — colored LEDs, a 7-segment display,
+DIP switches, a CPU status indicator, and a live UART output pane. Connects to
+Renode over TCP so you can interact with the hardware without touching the monitor
+prompt. Written in Go using the [Charm](https://charm.sh) ecosystem;
+cross-compiles to macOS, Linux, and Windows.
+
+```
+╭─────────────────────────────────────────────────────────────────────╮
+│               CS281 Virtual Development Board                        │
+│                         ◉  RUNNING                                  │
+│─────────────────────────────────────────────────────────────────────│
+│  INPUTS          │   7-SEG   │  LEDs         │  STATUS              │
+│                  │           │               │                      │
+│  [0] BTN0  mom   │   ───     │  ⬤ LED0 ○LED1 │  CPU  ● RUN         │
+│  [1] BTN1  mom   │  █   █    │  ○ LED2 ○LED3 │                     │
+│  [2] DIP0  ▽off  │   ───     │               │  ╔══════╗            │
+│  [3] DIP1  ▽off  │  █   █    │               │  ║ RST  ║            │
+│                  │   ───     │               │  ╚══════╝            │
+│─────────────────────────────────────────────────────────────────────│
+│  UART OUTPUT                                   ↑↓ / j k / scroll    │
+│─────────────────────────────────────────────────────────────────────│
+│  Main loop running...                                                │
+│  . . . . [BTN0] LED0 ON . . . [BTN0] LED0 OFF . . .                │
+│─────────────────────────────────────────────────────────────────────│
+│  [0] BTN0  [1] BTN1  [2] DIP0  [3] DIP1                            │
+│  [R] Reset     [P] Power Down      [Q] Quit                         │
+╰─────────────────────────────────────────────────────────────────────╯
+```
+
+**Power-up sequence** — pressing **P** connects to Renode and runs a self-test
+animation: each LED cycles on/off, each DIP flips, and the 7-segment counts 0–9.
+UART output is buffered silently behind a "Testing Board..." banner, then streams
+live once the board reports **POST OK**. Press **Esc** to skip the self-test.
+
+**Reset** — pressing **R** while running performs a soft reset: the CPU is paused,
+all GPIO inputs are cleared, the program counter is rewound to `_start`
+(`0x20000000`), and the CPU is resumed. The firmware re-runs its boot sequence
+without closing the Renode session.
+
+**CPU status** — the STATUS panel shows `● RUN` (green) or `○ HLT` (amber) based
+on whether the program counter is advancing. Programs that halt or spin on `wfi`
+without activity for ~6 seconds are flagged as halted.
+
+→ See **[experimental/ui/README.md](experimental/ui/README.md)** for build
+instructions, keyboard controls, flags, and architecture details.
+
+---
+
 *Drexel University — CS281 Systems Architecture*
