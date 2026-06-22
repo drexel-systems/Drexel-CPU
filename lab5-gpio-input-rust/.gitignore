@@ -1,0 +1,6 @@
+# Rust / Cargo build artifacts
+/target/
+
+# Cargo.lock is intentionally committed for binary crates (reproducible builds).
+# Remove the line below only if you want to ignore it.
+# Cargo.lock

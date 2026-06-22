@@ -1,0 +1,11 @@
+# =============================================================================
+# CS281 Lab 5 (Rust) — Cargo target configuration
+#
+# The riscv-rt crate handles everything the linker needs:
+#   - emits -Tlink.x (which INCLUDEs our memory.x from OUT_DIR)
+#   - sets up _start, .data/.bss init, mtvec, and the trap frame
+# No extra rustflags are required here.
+# =============================================================================
+
+[build]
+target = "riscv32im-unknown-none-elf"

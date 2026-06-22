@@ -1,0 +1,33 @@
+[package]
+name        = "lab5-gpio-input-rust"
+version     = "0.1.0"
+edition     = "2021"
+description = "CS281 Lab 5 — GPIO Input Interrupts (Rust bare-metal port)"
+
+# Binary target — override name so the output ELF is 'lab5r' instead of the
+# hyphenated package name.
+[[bin]]
+name = "lab5r"
+path = "src/main.rs"
+
+# ── Embedded Rust ecosystem crates ───────────────────────────────────────────
+#
+# riscv-rt  Provides _start (reset vector), .data/.bss init, mtvec setup, and
+#           a full register-save/restore trap frame — all in assembly generated
+#           by the crate.  The application only sees the #[entry] attribute and
+#           the named interrupt/exception hooks it chooses to implement.
+#
+# riscv     Type-safe access to RISC-V CSRs.  riscv::interrupt::enable() sets
+#           mstatus.MIE without any inline asm in application code.
+[dependencies]
+riscv-rt = "0.12"
+riscv    = "0.11"
+
+[profile.release]
+opt-level     = "s"   # optimise for size (typical for embedded firmware)
+lto           = true  # enable link-time optimisation across crate boundaries
+codegen-units = 1     # required for fat LTO
+debug         = true  # keep DWARF info so GDB / Renode can show source lines
+
+[profile.dev]
+opt-level = 1         # light optimisation even in debug so UART timing is sane

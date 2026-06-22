@@ -1,0 +1,50 @@
+# =============================================================================
+# CS281 Lab 5 (Rust) — Renode Run Script
+#
+# Identical in behaviour to lab5-gpio-input/lab5_run.resc.
+# SetAdvanceImmediately false paces the simulation so the busy-wait dot loop
+# prints at a human-readable rate rather than flooding UART instantly.
+#
+# Trigger buttons from the monitor terminal (make monitor-connect):
+#   runMacro $btn0Press    # BTN0 press+release → rising edge → ISR fires
+#   runMacro $btn1Press    # BTN1 press+release → ISR fires
+#
+#   Or manually:
+#   sysbus.gpio_in OnGPIO 0 True    # BTN0 press
+#   sysbus.gpio_in OnGPIO 0 False   # BTN0 release
+#   sysbus.gpio_in OnGPIO 1 True    # BTN1 press
+#   sysbus.gpio_in OnGPIO 1 False   # BTN1 release
+# =============================================================================
+
+mach create "CS281_Board"
+machine LoadPlatformDescription $platform
+
+emulation CreateServerSocketTerminal 3456 "uart_term" false
+connector Connect uart uart_term
+
+sysbus LoadELF $bin
+
+# ── Time throttle — paces simulation to wall-clock speed ─────────────────────
+emulation SetAdvanceImmediately false
+
+# ── Button macros — press + release in one command ───────────────────────────
+macro btn0Press
+"""
+    sysbus.gpio_in OnGPIO 0 True
+    sysbus.gpio_in OnGPIO 0 False
+"""
+
+macro btn1Press
+"""
+    sysbus.gpio_in OnGPIO 1 True
+    sysbus.gpio_in OnGPIO 1 False
+"""
+
+echo "CS281 Lab 5 (Rust) ready."
+echo "UART on telnet port 3456."
+echo ""
+echo "Simulate buttons from the monitor terminal (make monitor-connect):"
+echo "  runMacro \$btn0Press    # BTN0 press -> toggle LED0"
+echo "  runMacro \$btn1Press    # BTN1 press -> toggle LED1"
+echo ""
+start
