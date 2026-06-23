@@ -1,0 +1,8 @@
+.{
+    .name = .lab5_gpio_input_zig,
+    .fingerprint = 0xe1e4ac9ee11357b8,
+    .version = "0.1.0",
+    .minimum_zig_version = "0.14.0",
+    .dependencies = .{},
+    .paths = .{"."},
+}

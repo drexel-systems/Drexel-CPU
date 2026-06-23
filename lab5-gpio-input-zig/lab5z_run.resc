@@ -1,0 +1,34 @@
+# =============================================================================
+# CS281 Lab 5 (Zig) — Renode Run Script
+# =============================================================================
+
+mach create "CS281_Board"
+machine LoadPlatformDescription $platform
+
+emulation CreateServerSocketTerminal 3456 "uart_term" false
+connector Connect uart uart_term
+
+sysbus LoadELF $bin
+
+emulation SetAdvanceImmediately false
+
+macro btn0Press
+"""
+    sysbus.gpio_in OnGPIO 0 True
+    sysbus.gpio_in OnGPIO 0 False
+"""
+
+macro btn1Press
+"""
+    sysbus.gpio_in OnGPIO 1 True
+    sysbus.gpio_in OnGPIO 1 False
+"""
+
+echo "CS281 Lab 5 (Zig) ready."
+echo "UART on telnet port 3456."
+echo ""
+echo "Simulate buttons from the monitor terminal (make monitor-connect):"
+echo "  runMacro \$btn0Press    # BTN0 press -> toggle LED0"
+echo "  runMacro \$btn1Press    # BTN1 press -> toggle LED1"
+echo ""
+start
